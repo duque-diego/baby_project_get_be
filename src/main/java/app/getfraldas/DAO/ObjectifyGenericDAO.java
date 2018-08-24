@@ -1,6 +1,6 @@
 package app.getfraldas.DAO;
 
-import app.getfraldas.service.OfyService;
+import app.getfraldas.service.impl.OfyService;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;

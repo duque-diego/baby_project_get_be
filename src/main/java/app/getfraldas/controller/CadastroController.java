@@ -1,7 +1,7 @@
 package app.getfraldas.controller;
 
 import app.getfraldas.DTO.CadastroUsuarioAppDTO;
-import app.getfraldas.service.ICadastroUsuarioAppService;
+import app.getfraldas.service.impl.CadastroUsuarioAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ import java.util.Calendar;
 public class CadastroController {
 
     @Autowired
-    private ICadastroUsuarioAppService iCadastroUsuarioAppService;
+    private CadastroUsuarioAppService iCadastroUsuarioAppService;
 
     @GetMapping("/")
     public String hello() {

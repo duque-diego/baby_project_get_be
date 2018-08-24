@@ -1,7 +1,8 @@
-package app.getfraldas.service;
+package app.getfraldas.service.impl;
 
 import app.getfraldas.DTO.CadastroUsuarioAppDTO;
 import app.getfraldas.repository.CadastroUsuarioAppRepository;
+import app.getfraldas.service.ICadastroUsuarioAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

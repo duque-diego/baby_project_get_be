@@ -45,7 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers("/getDadosUsuarioApp/*").permitAll()
                 .antMatchers("/updateDadosUsuarioApp").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/api/*").permitAll()
+                .antMatchers("/_ah/*").permitAll()
+//                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
 
                 .addFilterBefore(new ObjectifyFilter(), UsernamePasswordAuthenticationFilter.class)
