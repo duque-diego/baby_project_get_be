@@ -1,19 +1,28 @@
 package app.getfraldas.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * Created by diegods on 11/08/18 d.C..
  */
+
+@Entity
 public class Loja {
 
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String nome;
-    private boolean isChecada;
+    private String imageLink;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -25,11 +34,11 @@ public class Loja {
         this.nome = nome;
     }
 
-    public boolean isChecada() {
-        return isChecada;
+    public String getImageLink() {
+        return imageLink;
     }
 
-    public void setChecada(boolean checada) {
-        isChecada = checada;
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 }

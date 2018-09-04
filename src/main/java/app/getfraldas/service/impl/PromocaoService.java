@@ -37,8 +37,8 @@ public class PromocaoService implements IPromocaoService {
     public PromocaoDTO savePromocao(PromocaoDTO promocaoDTO) {
 
         //teste repository
-        connectDataBase();
-        getPromocao();
+//        connectDataBase();
+//        getPromocao();
 
 
 //        promocaoRepository.put(promocaoDTO);
