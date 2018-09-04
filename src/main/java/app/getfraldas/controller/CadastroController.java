@@ -11,6 +11,7 @@ import java.util.Calendar;
  * Created by diegods on 31/05/18.
  */
 
+@CrossOrigin
 @RestController
 public class CadastroController {
 

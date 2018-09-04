@@ -13,6 +13,9 @@ public class PromocaoDTO implements Serializable {
     private FraldaDTO fralda;
     private LojaDTO loja;
     private TamanhoDTO tamanho;
+    private String unitPrice;
+    private String packagePrice;
+    private String promotionLink;
 
     public Long getId() {
         return id;
@@ -44,5 +47,29 @@ public class PromocaoDTO implements Serializable {
 
     public void setTamanho(TamanhoDTO tamanho) {
         this.tamanho = tamanho;
+    }
+
+    public String getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(String unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public String getPackagePrice() {
+        return packagePrice;
+    }
+
+    public void setPackagePrice(String packagePrice) {
+        this.packagePrice = packagePrice;
+    }
+
+    public String getPromotionLink() {
+        return promotionLink;
+    }
+
+    public void setPromotionLink(String promotionLink) {
+        this.promotionLink = promotionLink;
     }
 }

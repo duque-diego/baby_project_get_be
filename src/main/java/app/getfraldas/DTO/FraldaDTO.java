@@ -1,29 +1,15 @@
 package app.getfraldas.DTO;
 
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-
 import java.io.Serializable;
 
 /**
  * Created by fprado on 22/08/18
  */
 
-@Entity
 public class FraldaDTO implements Serializable {
 
-    @Id
-    private Long id;
     private String nome;
-    private boolean isChecada;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String imageLink;
 
     public String getNome() {
         return nome;
@@ -33,11 +19,11 @@ public class FraldaDTO implements Serializable {
         this.nome = nome;
     }
 
-    public boolean isChecada() {
-        return isChecada;
+    public String getImageLink() {
+        return imageLink;
     }
 
-    public void setChecada(boolean checada) {
-        isChecada = checada;
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 }

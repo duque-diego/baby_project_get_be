@@ -20,12 +20,17 @@ public class PromocaoController {
     private PromocaoService promocaoService;
 
     @GetMapping("/promocao/{id}")
-    public ResponseEntity<PromocaoDTO> getPromocao(@RequestParam Long id) {
+    public ResponseEntity<PromocaoDTO> getPromocao(@PathVariable Long id) {
         return ResponseEntity.ok(promocaoService.getPromocao(id));
     }
 
     @GetMapping("/promocoes")
     public ResponseEntity<List<PromocaoDTO>> getPromocoes() {
         return ResponseEntity.ok(promocaoService.getPromocoes());
+    }
+
+    @PutMapping("/promocao")
+    public ResponseEntity<PromocaoDTO> savePromocao(@RequestBody PromocaoDTO promocaoDTO) {
+        return ResponseEntity.ok(promocaoService.savePromocao(promocaoDTO));
     }
 }
