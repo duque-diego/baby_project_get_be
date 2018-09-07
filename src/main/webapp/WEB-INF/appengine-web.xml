@@ -4,9 +4,4 @@
     <threadsafe>true</threadsafe>
     <runtime>java8</runtime>
     <sessions-enabled>true</sessions-enabled>
-
-    <system-properties>
-        <property name="cloudsql" value="jdbc:mysql://google/promofraldas?useSSL=false&amp;cloudSqlInstance=get-fraldas:southamerica-east1:promo-fraldas&amp;socketFactory=com.google.cloud.sql.mysql.SocketFactory&amp;user=root&amp;password=promofraldas" />
-    </system-properties>
-
 </appengine-web-app>

@@ -1,21 +1,26 @@
 package app.getfraldas.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by diegods on 11/08/18 d.C..
  */
 
 @Entity
+@Table(name = "loja")
 public class Loja {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @Column(name = "nome", nullable = false)
     private String nome;
+
+    @NotNull
+    @Column(name = "imageLink", nullable = false)
     private String imageLink;
 
     public Long getId() {
