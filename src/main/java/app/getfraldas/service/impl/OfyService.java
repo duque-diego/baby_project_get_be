@@ -15,7 +15,7 @@ public class OfyService {
 
     static {
         ObjectifyService.register(CadastroUsuarioAppDTO.class);
-        ObjectifyService.register(PromocaoDTO.class);
+//        ObjectifyService.register(PromocaoDTO.class);
     }
 
     public static Objectify ofy(){

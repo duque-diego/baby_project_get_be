@@ -4,12 +4,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by diegods on 11/08/18 d.C..
+ * Created by fprado on 07/09/18
  */
-@Entity
-@Table(name = "tamanho")
-public class Tamanho {
 
+@Entity
+@Table(name = "marca")
+public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

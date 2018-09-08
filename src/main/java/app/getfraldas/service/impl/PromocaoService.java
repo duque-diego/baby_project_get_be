@@ -25,12 +25,14 @@ public class PromocaoService implements IPromocaoService {
 
     @Override
     public PromocaoDTO getPromocao(Long id) {
-        return promocaoRepository.get(id);
+//        return promocaoRepository.get(id);
+        return null;
     }
 
     @Override
     public List<PromocaoDTO> getPromocoes() {
-        return promocaoRepository.listAll();
+        return null;
+//        return promocaoRepository.listAll();
     }
 
     @Override

@@ -1,15 +1,11 @@
 package app.getfraldas.repository;
 
-import app.getfraldas.DAO.ObjectifyGenericDAO;
-import app.getfraldas.DTO.PromocaoDTO;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import app.getfraldas.models.Promocao;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  * Created by fprado on 22/08/18
  */
 
-@Repository
-public class PromocaoRepository extends ObjectifyGenericDAO<PromocaoDTO> {
+public interface PromocaoRepository extends CrudRepository<Promocao, Long> {
 }

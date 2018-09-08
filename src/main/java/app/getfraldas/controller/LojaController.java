@@ -5,12 +5,9 @@ import app.getfraldas.repository.LojaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by fprado on 03/09/18
@@ -26,6 +23,11 @@ public class LojaController {
     @GetMapping("/loja")
     public ResponseEntity<Iterable<Loja>> getLojas() {
         return ResponseEntity.ok().body(lojaRepository.findAll());
+    }
+
+    @GetMapping("/loja/{id}")
+    public ResponseEntity<Optional<Loja>> getPromocao(@PathVariable Long id) {
+        return ResponseEntity.ok(lojaRepository.findById(id));
     }
 
     @PutMapping("/loja")

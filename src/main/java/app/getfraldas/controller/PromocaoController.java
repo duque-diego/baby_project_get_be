@@ -1,12 +1,12 @@
 package app.getfraldas.controller;
 
-import app.getfraldas.DTO.PromocaoDTO;
-import app.getfraldas.service.impl.PromocaoService;
+import app.getfraldas.models.Promocao;
+import app.getfraldas.repository.PromocaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by fprado on 22/08/18.
@@ -17,20 +17,20 @@ import java.util.List;
 public class PromocaoController {
 
     @Autowired
-    private PromocaoService promocaoService;
+    private PromocaoRepository promocaoRepository;
 
     @GetMapping("/promocao/{id}")
-    public ResponseEntity<PromocaoDTO> getPromocao(@PathVariable Long id) {
-        return ResponseEntity.ok(promocaoService.getPromocao(id));
+    public ResponseEntity<Optional<Promocao>> getPromocao(@PathVariable Long id) {
+        return ResponseEntity.ok(promocaoRepository.findById(id));
     }
 
     @GetMapping("/promocoes")
-    public ResponseEntity<List<PromocaoDTO>> getPromocoes() {
-        return ResponseEntity.ok(promocaoService.getPromocoes());
+    public ResponseEntity<Iterable<Promocao>> getPromocoes() {
+        return ResponseEntity.ok(promocaoRepository.findAll());
     }
 
     @PutMapping("/promocao")
-    public ResponseEntity<PromocaoDTO> savePromocao(@RequestBody PromocaoDTO promocaoDTO) {
-        return ResponseEntity.ok(promocaoService.savePromocao(promocaoDTO));
+    public ResponseEntity<Promocao> savePromocao(@RequestBody Promocao promocao) {
+        return ResponseEntity.ok(promocaoRepository.save(promocao));
     }
 }

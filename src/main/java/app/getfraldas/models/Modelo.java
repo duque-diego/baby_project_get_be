@@ -4,11 +4,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by diegods on 11/08/18 d.C..
+ * Created by fprado on 07/09/18
  */
+
 @Entity
-@Table(name = "tamanho")
-public class Tamanho {
+@Table(name = "modelo")
+public class Modelo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +18,13 @@ public class Tamanho {
     @NotNull
     @Column(name = "nome", nullable = false)
     private String nome;
+
+    @NotNull
+    @Column(name = "imageLink", nullable = false)
+    private String imageLink;
+
+    @ManyToOne
+    private Marca marca;
 
     public Long getId() {
         return id;
@@ -34,4 +42,19 @@ public class Tamanho {
         this.nome = nome;
     }
 
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
 }
