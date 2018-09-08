@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span class="fill-remaining-space">
+        <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>Cadastro</mat-icon></button>
+        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+          <button [routerLink]="['/product-register']" mat-menu-item>
+            <span>Produtos</span>
+          </button>  
+          <button [routerLink]="['/promotion-register']" mat-menu-item>
+            <span>Promoção</span>
+          </button>
+          <button [routerLink]="['/store-register']" mat-menu-item>
+            <span>Loja</span>
+          </button>
+        </mat-menu>
+        <button class="menu-space" mat-icon-button [matMenuTriggerFor]="menuConsulta"><mat-icon>Consulta</mat-icon></button>
+          <mat-menu #menuConsulta="matMenu" [overlapTrigger]="false">
+              <button [routerLink]="['/product-list']" mat-menu-item>
+              <span>Produtos</span>
+            </button>
+            <button [routerLink]="['/promotion-list']" mat-menu-item>
+              <span>Promoção</span>
+            </button>
+            <button [routerLink]="['/store-list']" mat-menu-item>
+              <span>Loja</span>
+            </button>
+          </mat-menu>
+      </span>  
+      <span class="align-center">Painel Administrativo - Promo Fraldas</span>
+    </mat-toolbar-row>
+  </mat-toolbar>

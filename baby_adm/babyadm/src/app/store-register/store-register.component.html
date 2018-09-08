@@ -1,0 +1,19 @@
+<app-toolbar></app-toolbar>
+
+  <mat-card>
+      <mat-card-title>Cadastro de Lojas</mat-card-title>
+      <mat-card-content>
+          <form class="product-container">
+              <mat-form-field class="example-full-width">
+                <input name="storeName" matInput placeholder="Nome da Loja" [(ngModel)]="storeName">
+              </mat-form-field>
+              <button class="button-margin" mat-raised-button (click)="openInput()">
+                  Selecione o logo da loja
+              </button>
+              <input id="fileInput" hidden type="file" (change)="onSelectFile($event)" >
+              <button mat-raised-button color="primary" (click)="register()">Cadastrar</button>
+            </form>
+            <img class="img-container" [src]="url" height="300"> 
+      </mat-card-content>
+      
+</mat-card>
