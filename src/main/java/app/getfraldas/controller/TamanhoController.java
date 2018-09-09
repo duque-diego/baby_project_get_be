@@ -20,7 +20,7 @@ public class TamanhoController {
     @Autowired
     private TamanhoRepository tamanhoRepository;
 
-    @GetMapping("/tamanho")
+    @GetMapping("/tamanhos")
     public ResponseEntity<Iterable<Tamanho>> getTamanhos() {
         return ResponseEntity.ok().body(tamanhoRepository.findAll());
     }

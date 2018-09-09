@@ -10,7 +10,7 @@ create table usuario(
 create table bebe(
     id bigint auto_increment,
     nome varchar(255),
-    dataNascimento timestamp,
+    dataNascimento datetime,
     peso float,
     usuarioId bigint,
     PRIMARY KEY (id),
@@ -56,7 +56,6 @@ create table loja(
     id bigint auto_increment,
     nome varchar(255),
     imageLink varchar(500),
-    marcaId bigint,
     PRIMARY KEY (id)
 );
 

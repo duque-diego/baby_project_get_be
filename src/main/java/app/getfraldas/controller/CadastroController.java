@@ -18,16 +18,6 @@ public class CadastroController {
     @Autowired
     private CadastroUsuarioAppService iCadastroUsuarioAppService;
 
-    @GetMapping("/")
-    public String hello() {
-        return "Hello Spring Boot, I'm on App Engine!!!";
-    }
-
-    @GetMapping("/time")
-    public String time() {
-        return Calendar.getInstance().getTime().toString();
-    }
-
     @ResponseBody
     @RequestMapping(value = "/cadastroUsuarioApp", method = RequestMethod.POST)
     public CadastroUsuarioAppDTO cadastroUsuarioApp(@RequestBody CadastroUsuarioAppDTO cadastroUsuarioAppDTO) {
