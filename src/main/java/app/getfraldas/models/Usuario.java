@@ -27,6 +27,9 @@ public class Usuario {
     @Column(name = "telefone")
     private String telefone;
 
+    @Column(name = "cpf")
+    private String cpf;
+
     @ManyToMany
     @JoinTable(name = "usuario_loja",
             joinColumns = @JoinColumn(name = "usuarioId", referencedColumnName = "id"),
@@ -84,6 +87,14 @@ public class Usuario {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Set<Loja> getLojas() {

@@ -20,7 +20,7 @@ public class LojaController {
     @Autowired
     private LojaRepository lojaRepository;
 
-    @GetMapping("/loja")
+    @GetMapping("/lojas")
     public ResponseEntity<Iterable<Loja>> getLojas() {
         return ResponseEntity.ok().body(lojaRepository.findAll());
     }

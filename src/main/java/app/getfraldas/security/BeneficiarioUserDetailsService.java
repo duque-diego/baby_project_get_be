@@ -1,8 +1,8 @@
 package app.getfraldas.security;
 
 
-import app.getfraldas.DTO.CadastroUsuarioAppDTO;
-import app.getfraldas.repository.CadastroUsuarioAppRepository;
+import app.getfraldas.models.Usuario;
+import app.getfraldas.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,20 +10,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class BeneficiarioUserDetailsService implements UserDetailsService {
 
-
     @Autowired
-    private CadastroUsuarioAppRepository cadastroUsuarioAppRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        CadastroUsuarioAppDTO cadastroUsuario = cadastroUsuarioAppRepository.getByProperty("email", email);
+        Usuario usuario = usuarioRepository.findByEmailEquals(email);
 
-        if(cadastroUsuario != null) {
-
-            String name = cadastroUsuario.getNome();
-            String surname = cadastroUsuario.getCpf();
-            String password = cadastroUsuario.getSenha();
+        if(usuario != null) {
+            String password = usuario.getSenha();
             BeneficiarioUserDetails beneficiarioUserDetails = new BeneficiarioUserDetails(email,password);
             return beneficiarioUserDetails;
         }
