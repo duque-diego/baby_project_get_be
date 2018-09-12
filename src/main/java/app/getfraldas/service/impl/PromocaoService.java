@@ -1,7 +1,14 @@
 package app.getfraldas.service.impl;
 
+import app.getfraldas.DTO.DadosPromocaoDTO;
 import app.getfraldas.DTO.PromocaoDTO;
+import app.getfraldas.models.Loja;
+import app.getfraldas.models.Modelo;
+import app.getfraldas.models.Tamanho;
+import app.getfraldas.repository.LojaRepository;
+import app.getfraldas.repository.ModeloRepository;
 import app.getfraldas.repository.PromocaoRepository;
+import app.getfraldas.repository.TamanhoRepository;
 import app.getfraldas.service.IPromocaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +29,15 @@ public class PromocaoService implements IPromocaoService {
 
     @Autowired
     private PromocaoRepository promocaoRepository;
+
+    @Autowired
+    private LojaRepository lojaRepository;
+
+    @Autowired
+    private ModeloRepository modeloRepository;
+
+    @Autowired
+    private TamanhoRepository tamanhoRepository;
 
     @Override
     public PromocaoDTO getPromocao(Long id) {
@@ -69,6 +85,18 @@ public class PromocaoService implements IPromocaoService {
         } catch (SQLException e) {
             LOGGER.info(e.getMessage());
         }
+    }
+
+    public DadosPromocaoDTO getDadosPromocao(){
+
+        Iterable<Loja> lojas = lojaRepository.findAll();
+        Iterable<Modelo> modelos = modeloRepository.findAll();
+        Iterable<Tamanho> tamanhos = tamanhoRepository.findAll();
+        DadosPromocaoDTO dadosPromocaoDTO = new DadosPromocaoDTO();
+        dadosPromocaoDTO.setLojas(lojas);
+        dadosPromocaoDTO.setModelos(modelos);
+        dadosPromocaoDTO.setTamanhos(tamanhos);
+        return dadosPromocaoDTO;
     }
 
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Brand } from '../models/brand';
+import { Marca } from '../models/marca';
 import { Size } from '../models/size';
 import { Product } from '../models/product';
+import { ApiModelProvider } from '../services/api-model-data';
 
 @Component({
   selector: 'app-product-register',
@@ -11,12 +12,12 @@ import { Product } from '../models/product';
 export class ProductRegisterComponent implements OnInit {
 
   url = '';
-  private brands:Brand[] = [
-    new Brand(1, 'Pampers'),
-    new Brand(2, 'MammyPoko'),
-    new Brand(3, 'Johnsons Baby'),
-    new Brand(4, 'Turmar da Mônica'),
-    new Brand(5, 'Huggies'),
+  private brands:Marca[] = [
+    new Marca(1, 'Pampers'),
+    new Marca(2, 'MammyPoko'),
+    new Marca(3, 'Johnsons Baby'),
+    new Marca(4, 'Turmar da Mônica'),
+    new Marca(5, 'Huggies'),
   ];
 
   private sizes:Size[] = [
@@ -29,12 +30,13 @@ export class ProductRegisterComponent implements OnInit {
 
   productName:string = '';
   productSize:number;
-  productBrand:number;
+  productBrand:Marca;
   productImg:string;
+  marca:Marca;
 
   ourFile: File; // hold our file
 
-  constructor() { }
+  constructor(public apiModelProvider:ApiModelProvider) { }
 
   ngOnInit() {
   }
@@ -59,6 +61,17 @@ export class ProductRegisterComponent implements OnInit {
   register(){
     var product = new Product(null, this.productName, this.productBrand, this.url);
     console.log(product);
+
+    this.apiModelProvider
+        .putModel(product)
+        .subscribe(response => {
+          console.log(response);
+          // this.storage.set("userData", response); 
+          // loading.dismiss();
+          // this.presentConfirm();
+        }, error => {
+          //loading.dismiss();
+        });
   }
 
 }

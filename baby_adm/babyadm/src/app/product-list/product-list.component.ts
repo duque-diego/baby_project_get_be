@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../models/product';
 import { MatTableDataSource } from '@angular/material';
+import { ApiModelProvider } from '../services/api-model-data';
 
 export interface IProduct {
   id: number;
@@ -9,13 +10,6 @@ export interface IProduct {
   imgSrc: string;
 }
 
-const ELEMENT_DATA: IProduct[] = [
-  {id: 1, name: 'Pampers', brandId: 1 , imgSrc: null},
-  {id: 2, name: 'Huggies', brandId: 1 , imgSrc: null},
-  {id: 3, name: 'Turma Monica', brandId: 1 , imgSrc: null},
-  {id: 4, name: 'Johnsons', brandId: 1 , imgSrc: null},
-  {id: 5, name: 'Teste', brandId: 1 , imgSrc: null},
-];
 
 @Component({
   selector: 'app-product-list',
@@ -25,15 +19,24 @@ const ELEMENT_DATA: IProduct[] = [
 export class ProductListComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'name', 'brandId', 'imgSrc'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource:any;
+
+  constructor(public apiModelProvider:ApiModelProvider) {
+
+    this.apiModelProvider
+        .getModels()
+        .subscribe(response => {
+          this.dataSource = new MatTableDataSource(response);
+        }, error => {
+          console.log("erro");
+        });
+  }
+
+  ngOnInit() {
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  constructor() { }
-
-  ngOnInit() {
   }
 
 }

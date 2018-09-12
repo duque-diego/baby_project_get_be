@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '../models/store';
+import { Loja } from '../models/store';
+import { ApiStoreProvider } from '../services/api-store-data';
 
 @Component({
   selector: 'app-store-register',
@@ -10,7 +11,7 @@ export class StoreRegisterComponent implements OnInit {
 
   url = '';
   storeName:string = '';
-  constructor() { }
+  constructor(public apiStoreProvider:ApiStoreProvider) { }
 
   ngOnInit() {
   }
@@ -33,8 +34,19 @@ export class StoreRegisterComponent implements OnInit {
   }
 
   register(){
-    var store = new Store(null, this.storeName, this.url);
+    var store = new Loja(null, this.storeName, this.url);
     console.log(store);
+
+    this.apiStoreProvider
+        .putStore(store)
+        .subscribe(response => {
+          console.log(response);
+          // this.storage.set("userData", response); 
+          // loading.dismiss();
+          // this.presentConfirm();
+        }, error => {
+          //loading.dismiss();
+        });
   }
 
 }

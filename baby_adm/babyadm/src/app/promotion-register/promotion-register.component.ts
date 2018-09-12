@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../models/product';
 import { Size } from '../models/size';
-import { Store } from '../models/store';
+import { Loja } from '../models/store';
 import { Promotion } from '../models/promotion';
+import { ApiStoreProvider } from '../services/api-store-data';
+import { ApiModelProvider } from '../services/api-model-data';
 
 @Component({
   selector: 'app-promotion-register',
@@ -17,21 +19,31 @@ export class PromotionRegisterComponent implements OnInit {
   product:number;
   productSize:number;
   productStore:number;
+  private stores:Loja[] = [];
+  private products:Product[] = [];
 
 
-  constructor() { }
+  constructor(public apiStoreProvider:ApiStoreProvider, public apiModelProvider:ApiModelProvider) {
+    this.apiStoreProvider
+        .getStores()
+        .subscribe(response => {
+          this.stores = response;
+        }, error => {
+          console.log("erro");
+        });
+    
+    this.apiModelProvider
+    .getModels()
+    .subscribe(response => {
+      this.products = response;
+    }, error => {
+      console.log("erro");
+    });
+
+   }
 
   ngOnInit() {
   }
-
-  private products:Product[] = [
-    new Product(1, 'Pampers', 1 , null),
-    new Product(2, 'Huggies', 1 , null),
-    new Product(3, 'Comfort', 1 , null),
-    new Product(4, 'Bebe seco', 1 , null),
-    new Product(5, 'Bebe molhado', 1 , null),
-  ];
-
   private sizes:Size[] = [
     new Size(1, 'P'),
     new Size(2, 'M'),
@@ -40,13 +52,7 @@ export class PromotionRegisterComponent implements OnInit {
     new Size(5, 'XXG'),
   ];
 
-  private stores:Store[] = [
-    new Store(1, 'Americanas', null),
-    new Store(2, 'Magazine Luiza', null),
-    new Store(3, 'Onofre', null),
-    new Store(4, 'Wallmart', null),
-    new Store(5, 'Carrefour', null),
-  ];
+  
 
   register(){
     var promotion = new Promotion(

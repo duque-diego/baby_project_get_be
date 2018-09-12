@@ -10,8 +10,8 @@
              
               <mat-form-field>
                 <mat-select name="productBrand" placeholder="Marca" [(ngModel)]="productBrand" ngDefaultControl>
-                  <mat-option  *ngFor="let brand of brands" [value]="brand.id" >
-                    {{brand.name}}
+                  <mat-option  *ngFor="let brand of brands" [value]="brand" >
+                    {{brand.nome}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

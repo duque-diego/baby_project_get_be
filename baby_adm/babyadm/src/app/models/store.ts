@@ -1,10 +1,10 @@
-export class Store {
+export class Loja {
     id: number;
-    name: string;
-    imgSrc: string;
-    constructor(id: number, name: string, imgSrc:string) {
+    nome: string;
+    imageLink: string;
+    constructor(id: number, nome: string, imageLink:string) {
       this.id = id;
-      this.name = name;
-      this.imgSrc = imgSrc;
+      this.nome = nome;
+      this.imageLink = imageLink;
     }
 }
