@@ -8,6 +8,8 @@ import { PromotionRegisterComponent } from '../app/promotion-register/promotion-
 import { ProductListComponent } from '../app/product-list/product-list.component';
 import { PromotionListComponent } from '../app/promotion-list/promotion-list.component';
 import { StoreListComponent } from '../app/store-list/store-list.component';
+import { BrandListComponent } from './brand-list/brand-list.component';
+import { BrandRegisterComponent } from './brand-register/brand-register.component';
 
 const routes: Routes = [
     { path: 'products', component: ProductListComponent },
@@ -19,6 +21,8 @@ const routes: Routes = [
     { path: "store-list", component: StoreListComponent },
     { path: "promotion-register", component: PromotionRegisterComponent },
     { path: "promotion-list", component: PromotionListComponent },
+    { path: "brand-register", component: BrandRegisterComponent },
+    { path: "brand-list", component: BrandListComponent },
     { path: '',  redirectTo: '/products', pathMatch: 'full' }
 ];
 

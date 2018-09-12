@@ -1,12 +1,14 @@
+import { Marca } from "./marca";
+
 export class Product {
     id: number;
-    name: string;
-    brandId: number;
-    imageSrc: string;
-    constructor(id: number, name: string, brandId:number, imageSrc:string) {
+    nome: string;
+    marca: Marca;
+    imageLink: string;
+    constructor(id: number, nome: string, marca:Marca, imageLink:string) {
       this.id = id;
-      this.name = name;
-      this.brandId = brandId;
-      this.imageSrc = imageSrc;
+      this.nome = nome;
+      this.marca = marca;
+      this.imageLink = imageLink;
     }
 }

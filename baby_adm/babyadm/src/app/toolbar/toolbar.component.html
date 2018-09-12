@@ -12,6 +12,9 @@
           <button [routerLink]="['/store-register']" mat-menu-item>
             <span>Loja</span>
           </button>
+          <button [routerLink]="['/brand-register']" mat-menu-item>
+            <span>Marca</span>
+          </button>
         </mat-menu>
         <button class="menu-space" mat-icon-button [matMenuTriggerFor]="menuConsulta"><mat-icon>Consulta</mat-icon></button>
           <mat-menu #menuConsulta="matMenu" [overlapTrigger]="false">
@@ -23,6 +26,9 @@
             </button>
             <button [routerLink]="['/store-list']" mat-menu-item>
               <span>Loja</span>
+            </button>
+            <button [routerLink]="['/brand-list']" mat-menu-item>
+              <span>Marca</span>
             </button>
           </mat-menu>
       </span>  

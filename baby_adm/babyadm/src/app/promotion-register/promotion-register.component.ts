@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../models/product';
 import { Size } from '../models/size';
-import { Store } from '../models/store';
+import { Loja } from '../models/store';
 import { Promotion } from '../models/promotion';
+import { ApiPromotionProvider } from '../services/api-promotion-data';
+;
 
 @Component({
   selector: 'app-promotion-register',
@@ -17,37 +19,25 @@ export class PromotionRegisterComponent implements OnInit {
   product:number;
   productSize:number;
   productStore:number;
+  private stores:Loja[] = [];
+  private products:Product[] = [];
+  private sizes:Size[] = [];
 
+  constructor(public apiPromotionProvider:ApiPromotionProvider) {
+    
+    this.apiPromotionProvider
+      .getPromotionData()
+      .subscribe(response => {
+        this.stores = response.lojas;
+        this.products = response.modelos;
+        this.sizes = response.tamanhos;
+      }, error => {
+        console.log("erro");
+      });
+   }
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  private products:Product[] = [
-    new Product(1, 'Pampers', 1 , null),
-    new Product(2, 'Huggies', 1 , null),
-    new Product(3, 'Comfort', 1 , null),
-    new Product(4, 'Bebe seco', 1 , null),
-    new Product(5, 'Bebe molhado', 1 , null),
-  ];
-
-  private sizes:Size[] = [
-    new Size(1, 'P'),
-    new Size(2, 'M'),
-    new Size(3, 'G'),
-    new Size(4, 'GG'),
-    new Size(5, 'XXG'),
-  ];
-
-  private stores:Store[] = [
-    new Store(1, 'Americanas', null),
-    new Store(2, 'Magazine Luiza', null),
-    new Store(3, 'Onofre', null),
-    new Store(4, 'Wallmart', null),
-    new Store(5, 'Carrefour', null),
-  ];
-
+  ngOnInit() {}
+  
   register(){
     var promotion = new Promotion(
       null, 
@@ -59,6 +49,13 @@ export class PromotionRegisterComponent implements OnInit {
       this.productStore
     );
     console.log(promotion);
+    this.apiPromotionProvider
+      .putPromotion(promotion)
+      .subscribe(response => {
+        console.log(response);
+      }, error => {
+        console.log("erro");
+      });
   }
 
 }

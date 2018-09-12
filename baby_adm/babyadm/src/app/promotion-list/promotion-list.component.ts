@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Promotion } from '../models/promotion';
+import { ApiPromotionProvider } from '../services/api-promotion-data';
 
 @Component({
   selector: 'app-promotion-list',
@@ -9,24 +10,24 @@ import { Promotion } from '../models/promotion';
 })
 export class PromotionListComponent implements OnInit {
 
- 
-
-  ELEMENT_DATA: Promotion[] = [
-    new Promotion(1, 12, 45, 'adfadfadfadfadf', 1, 2, 3),
-    new Promotion(2, 12, 45, 'adfadfadfadfadf', 1, 2, 3),
-    new Promotion(3, 12, 45, 'adfadfadfadfadf', 1, 2, 3),
-    new Promotion(4, 12, 45, 'adfadfadfadfadf', 1, 2, 3),
-    new Promotion(5, 12, 45, 'adfadfadfadfadf', 1, 2, 3),
-  ];
-
+  ELEMENT_DATA: Promotion[] = [];
   displayedColumns: string[] = ['id', 'unitValue', 'packageValue', 'promotionLink', 'productId', 'sizeId', 'storeId'];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  dataSource; 
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  constructor() { }
+  constructor(public apiPromotionProvider:ApiPromotionProvider) {
+    this.apiPromotionProvider
+      .getPromotions()
+      .subscribe(response => {
+        this.ELEMENT_DATA = response;
+        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      }, error => {
+        console.log("erro");
+      });
+  }
 
   ngOnInit() {
   }

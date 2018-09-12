@@ -18,6 +18,15 @@ import { StoreRegisterComponent } from './store-register/store-register.componen
 import { PromotionRegisterComponent } from './promotion-register/promotion-register.component';
 import { PromotionListComponent } from './promotion-list/promotion-list.component';
 import { StoreListComponent } from './store-list/store-list.component';
+import { RestApiProvider } from '../app/services/rest-base.service';
+import { ApiModelProvider } from '../app/services/api-model-data';
+import { ApiPromotionProvider } from '../app/services/api-promotion-data';
+import { ApiStoreProvider } from '../app/services/api-store-data';
+import { ApiBrandProvider } from '../app/services/api-brand-data';
+import { HttpClientModule } from '@angular/common/http';
+import { BrandListComponent } from './brand-list/brand-list.component';
+import { BrandRegisterComponent } from './brand-register/brand-register.component'; 
+
 
 
 @NgModule({
@@ -31,7 +40,9 @@ import { StoreListComponent } from './store-list/store-list.component';
     StoreRegisterComponent,
     PromotionRegisterComponent,
     PromotionListComponent,
-    StoreListComponent
+    StoreListComponent,
+    BrandListComponent,
+    BrandRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -54,9 +65,10 @@ import { StoreListComponent } from './store-list/store-list.component';
     MatInputModule,
     FormsModule,
     routingModule,
-    MatSelectModule
+    MatSelectModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [RestApiProvider, ApiModelProvider, ApiPromotionProvider, ApiStoreProvider, ApiBrandProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiBrandProvider } from '../services/api-brand-data';
 import { MatTableDataSource } from '@angular/material';
-import { Loja } from '../models/store';
-import { ApiStoreProvider } from '../services/api-store-data';
 
 @Component({
-  selector: 'app-store-list',
-  templateUrl: './store-list.component.html',
-  styleUrls: ['./store-list.component.css']
+  selector: 'app-brand-list',
+  templateUrl: './brand-list.component.html',
+  styleUrls: ['./brand-list.component.css']
 })
-export class StoreListComponent implements OnInit {
+export class BrandListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'imgSrc'];
+  displayedColumns: string[] = ['id', 'name'];
   dataSource:any; 
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  constructor(public apiStoreProvider:ApiStoreProvider) { 
+  constructor(public apiBrandProvider:ApiBrandProvider) { 
 
-    this.apiStoreProvider
-        .getStores()
+    this.apiBrandProvider
+        .getBrands()
         .subscribe(response => {
           this.dataSource = new MatTableDataSource(response);
         }, error => {

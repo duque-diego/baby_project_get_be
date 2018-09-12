@@ -1,0 +1,13 @@
+<app-toolbar></app-toolbar>
+
+  <mat-card>
+      <mat-card-title>Cadastro de Marcas</mat-card-title>
+      <mat-card-content>
+          <form class="product-container">
+              <mat-form-field class="example-full-width">
+                <input name="brandName" matInput placeholder="Nome da Marca" [(ngModel)]="brandName">
+              </mat-form-field>
+              <button mat-raised-button color="primary" (click)="register()">Cadastrar</button>
+            </form>
+      </mat-card-content>      
+</mat-card>
