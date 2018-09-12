@@ -1,0 +1,32 @@
+.product-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+.product-container > * {
+    width: 40%;
+/* margin-left: 25%; */
+}
+
+.fill-remaining-space {
+/* This fills the remaining space, by using flexbox. 
+    Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+}
+
+.menu-space{
+    margin-left: 5%;
+}
+
+.button-margin{
+    margin-bottom: 3%;
+}
+
+.img-container{
+    /* display: flex;
+    flex-direction: column; */
+    position: absolute;
+    top: 5%;
+    right: 10%;
+}
+

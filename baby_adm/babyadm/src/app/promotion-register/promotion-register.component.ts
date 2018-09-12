@@ -3,8 +3,8 @@ import { Product } from '../models/product';
 import { Size } from '../models/size';
 import { Loja } from '../models/store';
 import { Promotion } from '../models/promotion';
-import { ApiStoreProvider } from '../services/api-store-data';
-import { ApiModelProvider } from '../services/api-model-data';
+import { ApiPromotionProvider } from '../services/api-promotion-data';
+;
 
 @Component({
   selector: 'app-promotion-register',
@@ -21,39 +21,23 @@ export class PromotionRegisterComponent implements OnInit {
   productStore:number;
   private stores:Loja[] = [];
   private products:Product[] = [];
+  private sizes:Size[] = [];
 
-
-  constructor(public apiStoreProvider:ApiStoreProvider, public apiModelProvider:ApiModelProvider) {
-    this.apiStoreProvider
-        .getStores()
-        .subscribe(response => {
-          this.stores = response;
-        }, error => {
-          console.log("erro");
-        });
+  constructor(public apiPromotionProvider:ApiPromotionProvider) {
     
-    this.apiModelProvider
-    .getModels()
-    .subscribe(response => {
-      this.products = response;
-    }, error => {
-      console.log("erro");
-    });
-
+    this.apiPromotionProvider
+      .getPromotionData()
+      .subscribe(response => {
+        this.stores = response.lojas;
+        this.products = response.modelos;
+        this.sizes = response.tamanhos;
+      }, error => {
+        console.log("erro");
+      });
    }
 
-  ngOnInit() {
-  }
-  private sizes:Size[] = [
-    new Size(1, 'P'),
-    new Size(2, 'M'),
-    new Size(3, 'G'),
-    new Size(4, 'GG'),
-    new Size(5, 'XXG'),
-  ];
-
+  ngOnInit() {}
   
-
   register(){
     var promotion = new Promotion(
       null, 
@@ -65,6 +49,13 @@ export class PromotionRegisterComponent implements OnInit {
       this.productStore
     );
     console.log(promotion);
+    this.apiPromotionProvider
+      .putPromotion(promotion)
+      .subscribe(response => {
+        console.log(response);
+      }, error => {
+        console.log("erro");
+      });
   }
 
 }

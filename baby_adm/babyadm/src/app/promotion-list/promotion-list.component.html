@@ -12,32 +12,32 @@
 
   <ng-container matColumnDef="unitValue">
     <th mat-header-cell *matHeaderCellDef> Valor Unitário </th>
-    <td mat-cell *matCellDef="let element"> {{element.unitValue}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.valorUnidade}} </td>
   </ng-container>
 
   <ng-container matColumnDef="packageValue">
     <th mat-header-cell *matHeaderCellDef> Valor do Pacote</th>
-    <td mat-cell *matCellDef="let element"> {{element.packageValue}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.valorPacote}} </td>
   </ng-container>
 
   <ng-container matColumnDef="promotionLink">
     <th mat-header-cell *matHeaderCellDef> Link da Promoção </th>
-    <td mat-cell *matCellDef="let element"> {{element.promotionLink}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.promoLink}} </td>
   </ng-container>
 
   <ng-container matColumnDef="productId">
-    <th mat-header-cell *matHeaderCellDef> Id do Produto </th>
-    <td mat-cell *matCellDef="let element"> {{element.productId}} </td>
+    <th mat-header-cell *matHeaderCellDef> Nome do Produto </th>
+    <td mat-cell *matCellDef="let element"> {{element.modelo.nome}} </td>
   </ng-container>
 
   <ng-container matColumnDef="sizeId">
-    <th mat-header-cell *matHeaderCellDef> Id do Tamanho </th>
-    <td mat-cell *matCellDef="let element"> {{element.sizeId}} </td>
+    <th mat-header-cell *matHeaderCellDef>Tamanho </th>
+    <td mat-cell *matCellDef="let element"> {{element.tamanho.nome}} </td>
   </ng-container>
 
   <ng-container matColumnDef="storeId">
-    <th mat-header-cell *matHeaderCellDef> Id da Loja </th>
-    <td mat-cell *matCellDef="let element"> {{element.storeId}} </td>
+    <th mat-header-cell *matHeaderCellDef> Loja </th>
+    <td mat-cell *matCellDef="let element"> {{element.loja.nome}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

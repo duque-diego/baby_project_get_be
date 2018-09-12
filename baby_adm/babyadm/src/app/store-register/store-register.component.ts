@@ -36,16 +36,12 @@ export class StoreRegisterComponent implements OnInit {
   register(){
     var store = new Loja(null, this.storeName, this.url);
     console.log(store);
-
     this.apiStoreProvider
         .putStore(store)
         .subscribe(response => {
           console.log(response);
-          // this.storage.set("userData", response); 
-          // loading.dismiss();
-          // this.presentConfirm();
         }, error => {
-          //loading.dismiss();
+          console.log(error);
         });
   }
 

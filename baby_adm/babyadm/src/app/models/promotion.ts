@@ -1,27 +1,27 @@
 export class Promotion {
     id: number;
-    unitValue: number;
-    packageValue: number;
-    promotionLink: string;
-    productId: number;
-    sizeId: number;
-    storeId: number;
+    valorUnidade: number;
+    valorPacote: number;
+    promoLink: string;
+    modelo: number;
+    tamanho: number;
+    loja: number;
     constructor(
       id: number, 
-      unitValue: number, 
-      packageValue: number, 
-      promotionLink: string, 
-      productId: number, 
-      sizeId: number,
-      storeId:number
+      valorUnidade: number, 
+      valorPacote: number, 
+      promoLink: string, 
+      modelo: number, 
+      tamanho: number,
+      loja:number
     ) 
     {
       this.id = id;
-      this.unitValue = unitValue;
-      this.packageValue = packageValue;
-      this.promotionLink = promotionLink;
-      this.productId = productId;
-      this.sizeId = sizeId;
-      this.storeId = storeId;
+      this.valorUnidade = valorUnidade;
+      this.valorPacote = valorPacote;
+      this.promoLink = promoLink;
+      this.modelo = modelo;
+      this.tamanho = tamanho;
+      this.loja = loja;
     }
 }

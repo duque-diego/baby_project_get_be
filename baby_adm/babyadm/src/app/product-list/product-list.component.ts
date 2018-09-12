@@ -9,8 +9,6 @@ export interface IProduct {
   brandId: number;
   imgSrc: string;
 }
-
-
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',

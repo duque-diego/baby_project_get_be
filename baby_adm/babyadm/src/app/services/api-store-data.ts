@@ -24,7 +24,7 @@ export class ApiStoreProvider {
   getStores() : Observable<Loja[]>{
     let call: IRestApiCall = {
       baseUrl: SERVER_API_URL,
-      endpoint: "/api/loja",
+      endpoint: "/api/lojas",
       body: null,
       headers: {"Content-Type": "application/json"},
       method: RequestMethod.Get

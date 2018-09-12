@@ -22,7 +22,10 @@ import { RestApiProvider } from '../app/services/rest-base.service';
 import { ApiModelProvider } from '../app/services/api-model-data';
 import { ApiPromotionProvider } from '../app/services/api-promotion-data';
 import { ApiStoreProvider } from '../app/services/api-store-data';
-import { HttpClientModule } from '@angular/common/http'; 
+import { ApiBrandProvider } from '../app/services/api-brand-data';
+import { HttpClientModule } from '@angular/common/http';
+import { BrandListComponent } from './brand-list/brand-list.component';
+import { BrandRegisterComponent } from './brand-register/brand-register.component'; 
 
 
 
@@ -37,7 +40,9 @@ import { HttpClientModule } from '@angular/common/http';
     StoreRegisterComponent,
     PromotionRegisterComponent,
     PromotionListComponent,
-    StoreListComponent
+    StoreListComponent,
+    BrandListComponent,
+    BrandRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +68,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatSelectModule,
     HttpClientModule
   ],
-  providers: [RestApiProvider, ApiModelProvider, ApiPromotionProvider, ApiStoreProvider],
+  providers: [RestApiProvider, ApiModelProvider, ApiPromotionProvider, ApiStoreProvider, ApiBrandProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
