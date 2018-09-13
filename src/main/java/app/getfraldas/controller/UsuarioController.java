@@ -30,6 +30,11 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioRepository.findById(id));
     }
 
+    @GetMapping("/usuario")
+    public ResponseEntity<Usuario> getUsuarioByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(usuarioRepository.findByEmailEquals(email));
+    }
+
     @PutMapping("/usuario")
     public ResponseEntity<Usuario> setUsuario(@RequestBody Usuario usuario) {
         return ResponseEntity.ok().body(usuarioRepository.save(usuario));
