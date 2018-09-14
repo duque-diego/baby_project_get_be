@@ -1,5 +1,8 @@
 package app.getfraldas.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -26,6 +29,8 @@ public class Bebe {
     private Double peso;
 
     @ManyToOne
+    @JsonIgnoreProperties("bebes")
+    @JsonIgnore
     private Usuario usuario;
 
     public Long getId() {

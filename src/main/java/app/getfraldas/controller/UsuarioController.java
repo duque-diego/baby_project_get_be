@@ -2,6 +2,7 @@ package app.getfraldas.controller;
 
 import app.getfraldas.models.Usuario;
 import app.getfraldas.repository.UsuarioRepository;
+import app.getfraldas.service.impl.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @GetMapping("/usuarios")
     public ResponseEntity<Iterable<Usuario>> getUsuarios() {
         return ResponseEntity.ok().body(usuarioRepository.findAll());
@@ -37,7 +41,7 @@ public class UsuarioController {
 
     @PutMapping("/usuario")
     public ResponseEntity<Usuario> setUsuario(@RequestBody Usuario usuario) {
-        return ResponseEntity.ok().body(usuarioRepository.save(usuario));
+        return ResponseEntity.ok().body(usuarioService.saveUsuario(usuario));
     }
 
 }

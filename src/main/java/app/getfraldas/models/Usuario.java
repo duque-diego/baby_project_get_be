@@ -30,6 +30,9 @@ public class Usuario {
     @Column(name = "cpf")
     private String cpf;
 
+    @OneToMany(mappedBy = "usuario")
+    private Set<Bebe> bebes;
+
     @ManyToMany
     @JoinTable(name = "usuario_loja",
             joinColumns = @JoinColumn(name = "usuarioId", referencedColumnName = "id"),
@@ -95,6 +98,14 @@ public class Usuario {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public Set<Bebe> getBebes() {
+        return bebes;
+    }
+
+    public void setBebes(Set<Bebe> bebes) {
+        this.bebes = bebes;
     }
 
     public Set<Loja> getLojas() {
