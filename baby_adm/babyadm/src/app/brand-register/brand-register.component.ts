@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiBrandProvider } from '../services/api-brand-data';
 import { Marca } from '../models/marca';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-brand-register',
@@ -10,7 +11,7 @@ import { Marca } from '../models/marca';
 export class BrandRegisterComponent implements OnInit {
 
   brandName:any;
-  constructor(public apiBrandProvider:ApiBrandProvider) { }
+  constructor(public apiBrandProvider:ApiBrandProvider, public router:Router) { }
 
   ngOnInit() {
   }
@@ -21,6 +22,7 @@ export class BrandRegisterComponent implements OnInit {
     this.apiBrandProvider
         .putBrand(brand)
         .subscribe(response => {
+          this.router.navigate(['brand-list']);
           console.log(response);
         }, error => {
           console.log(error);

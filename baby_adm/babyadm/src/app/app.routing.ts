@@ -23,7 +23,7 @@ const routes: Routes = [
     { path: "promotion-list", component: PromotionListComponent },
     { path: "brand-register", component: BrandRegisterComponent },
     { path: "brand-list", component: BrandListComponent },
-    { path: '',  redirectTo: '/products', pathMatch: 'full' }
+    { path: '',  redirectTo: '/login', pathMatch: 'full' }
 ];
 
 export const routingModule: ModuleWithProviders = RouterModule.forRoot(routes);
