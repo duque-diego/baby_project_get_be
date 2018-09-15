@@ -3,6 +3,7 @@ import { Marca } from '../models/marca';
 import { Size } from '../models/size';
 import { Product } from '../models/product';
 import { ApiModelProvider } from '../services/api-model-data';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-product-register',
@@ -36,7 +37,7 @@ export class ProductRegisterComponent implements OnInit {
 
   ourFile: File; // hold our file
 
-  constructor(public apiModelProvider:ApiModelProvider) { }
+  constructor(public apiModelProvider:ApiModelProvider, public router:Router) { }
 
   ngOnInit() {
   }
@@ -61,16 +62,13 @@ export class ProductRegisterComponent implements OnInit {
   register(){
     var product = new Product(null, this.productName, this.productBrand, this.url);
     console.log(product);
-
     this.apiModelProvider
         .putModel(product)
         .subscribe(response => {
+          this.router.navigate(['product-list']);
           console.log(response);
-          // this.storage.set("userData", response); 
-          // loading.dismiss();
-          // this.presentConfirm();
         }, error => {
-          //loading.dismiss();
+          console.log(error);
         });
   }
 

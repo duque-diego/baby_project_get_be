@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Loja } from '../models/store';
 import { ApiStoreProvider } from '../services/api-store-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-store-register',
@@ -11,7 +12,8 @@ export class StoreRegisterComponent implements OnInit {
 
   url = '';
   storeName:string = '';
-  constructor(public apiStoreProvider:ApiStoreProvider) { }
+  showSpinner:boolean;
+  constructor(public apiStoreProvider:ApiStoreProvider, public router:Router) { }
 
   ngOnInit() {
   }
@@ -36,11 +38,15 @@ export class StoreRegisterComponent implements OnInit {
   register(){
     var store = new Loja(null, this.storeName, this.url);
     console.log(store);
+    this.showSpinner = true;
     this.apiStoreProvider
         .putStore(store)
         .subscribe(response => {
+          this.showSpinner = false;
+          this.router.navigate(['store-list']);
           console.log(response);
         }, error => {
+          this.showSpinner = false;
           console.log(error);
         });
   }

@@ -4,7 +4,7 @@ import { Size } from '../models/size';
 import { Loja } from '../models/store';
 import { Promotion } from '../models/promotion';
 import { ApiPromotionProvider } from '../services/api-promotion-data';
-;
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-promotion-register',
@@ -23,7 +23,7 @@ export class PromotionRegisterComponent implements OnInit {
   private products:Product[] = [];
   private sizes:Size[] = [];
 
-  constructor(public apiPromotionProvider:ApiPromotionProvider) {
+  constructor(public apiPromotionProvider:ApiPromotionProvider, public router:Router) {
     
     this.apiPromotionProvider
       .getPromotionData()
@@ -53,6 +53,7 @@ export class PromotionRegisterComponent implements OnInit {
       .putPromotion(promotion)
       .subscribe(response => {
         console.log(response);
+        this.router.navigate(['promotion-list']);
       }, error => {
         console.log("erro");
       });
