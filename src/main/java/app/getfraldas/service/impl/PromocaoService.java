@@ -1,15 +1,20 @@
 package app.getfraldas.service.impl;
 
+import app.getfraldas.DTO.Contents;
 import app.getfraldas.DTO.DadosPromocaoDTO;
 import app.getfraldas.DTO.PromocaoDTO;
+import app.getfraldas.exception.SASServiceException;
 import app.getfraldas.models.Loja;
 import app.getfraldas.models.Modelo;
+import app.getfraldas.models.Promocao;
 import app.getfraldas.models.Tamanho;
 import app.getfraldas.repository.LojaRepository;
 import app.getfraldas.repository.ModeloRepository;
 import app.getfraldas.repository.PromocaoRepository;
 import app.getfraldas.repository.TamanhoRepository;
 import app.getfraldas.service.IPromocaoService;
+import app.getfraldas.utils.OneSignalUtil;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +22,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -46,9 +52,9 @@ public class PromocaoService implements IPromocaoService {
     }
 
     @Override
-    public List<PromocaoDTO> getPromocoes() {
-        return null;
-//        return promocaoRepository.listAll();
+    public Iterable<Promocao> getPromocoes() {
+        //return null;
+        return promocaoRepository.findAll();
     }
 
     @Override
@@ -97,6 +103,20 @@ public class PromocaoService implements IPromocaoService {
         dadosPromocaoDTO.setModelos(modelos);
         dadosPromocaoDTO.setTamanhos(tamanhos);
         return dadosPromocaoDTO;
+    }
+
+
+    public void enviaPushPromocoes() throws SASServiceException {
+        List<Promocao> promocaoList =  Lists.newArrayList(this.getPromocoes());
+        if(promocaoList.size() > 0){
+            //dispara Push
+            Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
+            try{
+                OneSignalUtil.callPushNotificationService(contents);
+            }catch (SASServiceException e){
+                throw new  SASServiceException(e.getMessage());
+            }
+        }
     }
 
 }

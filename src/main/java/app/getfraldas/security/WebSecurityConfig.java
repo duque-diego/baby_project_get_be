@@ -45,6 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/getDadosUsuarioApp/*").permitAll()
                 .antMatchers("/updateDadosUsuarioApp").permitAll()
                 .antMatchers("/api/*").permitAll()
+                .antMatchers("https://onesignal.com/api/v1/notifications").permitAll()
+                .antMatchers("/cron/*").permitAll()
                 .antMatchers("/_ah/*").permitAll()
 //                .anyRequest().authenticated()
                 .anyRequest().permitAll()

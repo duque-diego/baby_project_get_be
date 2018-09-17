@@ -1,0 +1,5 @@
+cron:
+- description: "daily summary job"
+  url: /cron/disparaPushesPromocao
+  target: beta
+  schedule: every 59 mins
