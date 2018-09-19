@@ -13,8 +13,10 @@ import { Router } from '@angular/router';
 })
 export class PromotionRegisterComponent implements OnInit {
 
-  productValueUnit:number;
+  
   productValuePackage:number;
+  packageQuantity:number;
+  productValueUnit:number;
   promotionLink:string;
   product:number;
   productSize:number;
@@ -39,6 +41,7 @@ export class PromotionRegisterComponent implements OnInit {
   ngOnInit() {}
   
   register(){
+
     var promotion = new Promotion(
       null, 
       this.productValueUnit, 
@@ -57,6 +60,11 @@ export class PromotionRegisterComponent implements OnInit {
       }, error => {
         console.log("erro");
       });
+  }
+
+  calculateUnitValue(){
+    
+    this.productValuePackage && this.packageQuantity ? this.productValueUnit = this.productValuePackage / this.packageQuantity : "";
   }
 
 }
