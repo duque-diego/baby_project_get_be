@@ -1,5 +1,7 @@
 package app.getfraldas.DTO;
 
+import app.getfraldas.models.Modelo;
+
 import java.io.Serializable;
 
 /**
@@ -25,5 +27,14 @@ public class FraldaDTO implements Serializable {
 
     public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
+    }
+
+    public static FraldaDTO toFraldaDTO (Modelo modelo){
+        FraldaDTO fraldaDTO = new FraldaDTO();
+        if(modelo != null){
+            fraldaDTO.setNome(modelo.getNome());
+            fraldaDTO.setImageLink(fraldaDTO.getImageLink());
+        }
+        return fraldaDTO;
     }
 }

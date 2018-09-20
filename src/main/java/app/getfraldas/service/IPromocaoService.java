@@ -13,4 +13,5 @@ public interface IPromocaoService {
     PromocaoDTO savePromocao(PromocaoDTO promocaoDTO);
     DadosPromocaoDTO getDadosPromocao();
     void enviaPushPromocoes() throws SASServiceException;
+    Iterable<PromocaoDTO> getPromocoesApp();
 }

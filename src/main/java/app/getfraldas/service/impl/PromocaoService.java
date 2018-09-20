@@ -119,4 +119,13 @@ public class PromocaoService implements IPromocaoService {
         }
     }
 
+    public Iterable<PromocaoDTO> getPromocoesApp(){
+
+        Iterable<Promocao> promocoes = promocaoRepository.findAll();
+        List<PromocaoDTO> promocoesDTO = new ArrayList<>();
+        for(Promocao promocao : promocoes){
+            promocoesDTO.add(PromocaoDTO.toPromocaoDTO(promocao));
+        }
+        return promocoesDTO;
+    }
 }
