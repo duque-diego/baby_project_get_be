@@ -45,6 +45,11 @@
                 </mat-select>
               </mat-form-field>
 
+              <button class="button-margin" mat-raised-button (click)="openInput()">
+                Selecione a foto do produto
+              </button>
+              <input id="fileInput" hidden type="file" (change)="onSelectFile($event)">
+
               <button mat-raised-button color="primary" (click)="register()">Cadastrar</button>
             </form> 
       </mat-card-content>

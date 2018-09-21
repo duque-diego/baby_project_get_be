@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class PromotionRegisterComponent implements OnInit {
 
-  
+  url = '';
   productValuePackage:number;
   packageQuantity:number;
   productValueUnit:number;
@@ -41,7 +41,6 @@ export class PromotionRegisterComponent implements OnInit {
   ngOnInit() {}
   
   register(){
-
     var promotion = new Promotion(
       null, 
       this.productValueUnit, 
@@ -49,7 +48,8 @@ export class PromotionRegisterComponent implements OnInit {
       this.promotionLink, 
       this.product, 
       this.productSize, 
-      this.productStore
+      this.productStore,
+      this.url
     );
     console.log(promotion);
     this.apiPromotionProvider
@@ -65,6 +65,22 @@ export class PromotionRegisterComponent implements OnInit {
   calculateUnitValue(){
     
     this.productValuePackage && this.packageQuantity ? this.productValueUnit = this.productValuePackage / this.packageQuantity : "";
+  }
+
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.url = event.target.result;
+      }
+    }
+  }
+
+  openInput() {
+    document.getElementById("fileInput").click();
   }
 
 }

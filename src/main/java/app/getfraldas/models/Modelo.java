@@ -19,8 +19,7 @@ public class Modelo {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @NotNull
-    @Column(name = "imageLink", nullable = false)
+    @Column(name = "imageLink")
     private String imageLink;
 
     @ManyToOne

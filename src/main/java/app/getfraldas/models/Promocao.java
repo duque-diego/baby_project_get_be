@@ -35,6 +35,9 @@ public class Promocao {
     @Column(name = "lastUpdate")
     private Date lastUpdate;
 
+    @Column(name = "imageLink")
+    private String imageLink;
+
     @ManyToOne
     private Modelo modelo;
 
@@ -82,6 +85,14 @@ public class Promocao {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 
     public Modelo getModelo() {

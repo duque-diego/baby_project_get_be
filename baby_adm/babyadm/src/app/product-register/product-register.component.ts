@@ -42,8 +42,7 @@ export class ProductRegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  openInput(){ 
-    
+  openInput() {
     document.getElementById("fileInput").click();
   }
 
