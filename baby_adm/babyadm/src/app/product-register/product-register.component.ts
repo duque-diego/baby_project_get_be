@@ -4,6 +4,7 @@ import { Size } from '../models/size';
 import { Product } from '../models/product';
 import { ApiModelProvider } from '../services/api-model-data';
 import { Router } from "@angular/router";
+import { ApiBrandProvider } from '../services/api-brand-data';
 
 @Component({
   selector: 'app-product-register',
@@ -13,21 +14,9 @@ import { Router } from "@angular/router";
 export class ProductRegisterComponent implements OnInit {
 
   url = '';
-  private brands:Marca[] = [
-    new Marca(1, 'Pampers'),
-    new Marca(2, 'MammyPoko'),
-    new Marca(3, 'Johnsons Baby'),
-    new Marca(4, 'Turmar da Mônica'),
-    new Marca(5, 'Huggies'),
-  ];
+  private brands:Marca[] = [];
 
-  private sizes:Size[] = [
-    new Size(1, 'P'),
-    new Size(2, 'M'),
-    new Size(3, 'G'),
-    new Size(4, 'GG'),
-    new Size(5, 'XXG'),
-  ];
+  private sizes:Size[] = [];
 
   productName:string = '';
   productSize:number;
@@ -37,7 +26,17 @@ export class ProductRegisterComponent implements OnInit {
 
   ourFile: File; // hold our file
 
-  constructor(public apiModelProvider:ApiModelProvider, public router:Router) { }
+  constructor(public apiModelProvider:ApiModelProvider, public router:Router, public apiBrandProvider:ApiBrandProvider ) { 
+
+    this.apiBrandProvider
+        .getBrands()
+        .subscribe(response => {
+          this.brands = response;
+        }, error => {
+          console.log("erro");
+        });
+
+  }
 
   ngOnInit() {
   }
