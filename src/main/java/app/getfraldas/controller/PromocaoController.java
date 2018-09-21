@@ -27,7 +27,11 @@ public class PromocaoController {
     }
 
     @GetMapping("/promocoes-app")
-    public ResponseEntity<Iterable<PromocaoDTO>> getPromocoesApp() {
+    public ResponseEntity<Iterable<PromocaoDTO>> getPromocoesApp(@RequestParam Long userId) {
+        if (userId != null) {
+            return ResponseEntity.ok(promocaoService.getPromocoesByTamanho(userId));
+        }
+
         return ResponseEntity.ok(promocaoService.getPromocoesApp());
     }
 

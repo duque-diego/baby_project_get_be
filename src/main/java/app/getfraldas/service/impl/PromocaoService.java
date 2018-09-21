@@ -120,13 +120,34 @@ public class PromocaoService implements IPromocaoService {
         return usuarioRepository.findDistinctEmails(lojas, tamanhos, modelos);
     }
 
-    public Iterable<PromocaoDTO> getPromocoesApp(){
-
+    public Iterable<PromocaoDTO> getPromocoesApp () {
         Iterable<Promocao> promocoes = promocaoRepository.findAll();
+        return modelToDto(promocoes);
+    }
+
+    public Iterable<PromocaoDTO> getPromocoesByTamanho(Long userId) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(userId);
+
+        if (!usuarioOptional.isPresent() || usuarioOptional.get().getTamanhos() == null || usuarioOptional.get().getTamanhos().isEmpty()) {
+            return null;
+        }
+
+        HashSet<Long> tamanhos = new HashSet<>();
+
+        for (Tamanho tamanho : usuarioOptional.get().getTamanhos()) {
+            tamanhos.add(tamanho.getId());
+        }
+
+        return modelToDto(promocaoRepository.findByTamanhoIdInOrderByValorUnidadeAsc(tamanhos));
+    }
+
+    private List<PromocaoDTO> modelToDto(Iterable<Promocao> promocoesModel) {
         List<PromocaoDTO> promocoesDTO = new ArrayList<>();
-        for(Promocao promocao : promocoes){
+
+        for(Promocao promocao : promocoesModel){
             promocoesDTO.add(PromocaoDTO.toPromocaoDTO(promocao));
         }
+
         return promocoesDTO;
     }
 }
