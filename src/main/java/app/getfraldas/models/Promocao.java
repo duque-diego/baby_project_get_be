@@ -1,7 +1,10 @@
 package app.getfraldas.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * Created by fprado on 03/09/18
@@ -26,6 +29,11 @@ public class Promocao {
     @NotNull
     @Column(name = "promoLink", nullable = false)
     private String promoLink;
+
+    @JsonIgnore
+    @NotNull
+    @Column(name = "lastUpdate")
+    private Date lastUpdate;
 
     @ManyToOne
     private Modelo modelo;
@@ -66,6 +74,14 @@ public class Promocao {
 
     public void setPromoLink(String promoLink) {
         this.promoLink = promoLink;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public Modelo getModelo() {

@@ -3,7 +3,6 @@ package app.getfraldas.controller;
 import app.getfraldas.DTO.DadosPromocaoDTO;
 import app.getfraldas.DTO.PromocaoDTO;
 import app.getfraldas.models.Promocao;
-import app.getfraldas.repository.PromocaoRepository;
 import app.getfraldas.service.impl.PromocaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +19,11 @@ import java.util.Optional;
 public class PromocaoController {
 
     @Autowired
-    private PromocaoRepository promocaoRepository;
-
-    @Autowired
     private PromocaoService promocaoService;
 
     @GetMapping("/promocao/{id}")
     public ResponseEntity<Optional<Promocao>> getPromocao(@PathVariable Long id) {
-        return ResponseEntity.ok(promocaoRepository.findById(id));
+        return ResponseEntity.ok(promocaoService.getPromocao(id));
     }
 
     @GetMapping("/promocoes-app")
@@ -37,12 +33,12 @@ public class PromocaoController {
 
     @GetMapping("/promocoes")
     public ResponseEntity<Iterable<Promocao>> getPromocoes() {
-        return ResponseEntity.ok(promocaoRepository.findAll());
+        return ResponseEntity.ok(promocaoService.getPromocoes());
     }
 
     @PutMapping("/promocao")
     public ResponseEntity<Promocao> savePromocao(@RequestBody Promocao promocao) {
-        return ResponseEntity.ok(promocaoRepository.save(promocao));
+        return ResponseEntity.ok(promocaoService.savePromocao(promocao));
     }
 
     @GetMapping("/dados-promocao")

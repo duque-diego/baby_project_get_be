@@ -1,40 +1,31 @@
 package app.getfraldas.service.impl;
 
-import app.getfraldas.DTO.Contents;
 import app.getfraldas.DTO.DadosPromocaoDTO;
 import app.getfraldas.DTO.PromocaoDTO;
 import app.getfraldas.exception.SASServiceException;
-import app.getfraldas.models.Loja;
-import app.getfraldas.models.Modelo;
-import app.getfraldas.models.Promocao;
-import app.getfraldas.models.Tamanho;
-import app.getfraldas.repository.LojaRepository;
-import app.getfraldas.repository.ModeloRepository;
-import app.getfraldas.repository.PromocaoRepository;
-import app.getfraldas.repository.TamanhoRepository;
+import app.getfraldas.models.*;
+import app.getfraldas.repository.*;
 import app.getfraldas.service.IPromocaoService;
-import app.getfraldas.utils.OneSignalUtil;
+import app.getfraldas.utils.DateUtils;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Service
 public class PromocaoService implements IPromocaoService {
 
-    private Connection conn;
-
     private static final Logger LOGGER = Logger.getLogger(PromocaoService.class.getName());
+    private static final String TIMEZONE_BRT = "America/Sao_Paulo";
+    private static final String TIMEZONE_UTC = "UTC";
 
     @Autowired
     private PromocaoRepository promocaoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private LojaRepository lojaRepository;
@@ -45,56 +36,31 @@ public class PromocaoService implements IPromocaoService {
     @Autowired
     private TamanhoRepository tamanhoRepository;
 
+    @Autowired
+    private CronService cronService;
+
     @Override
-    public PromocaoDTO getPromocao(Long id) {
-//        return promocaoRepository.get(id);
-        return null;
+    public Optional<Promocao> getPromocao(Long id) {
+        return promocaoRepository.findById(id);
     }
 
     @Override
     public Iterable<Promocao> getPromocoes() {
-        //return null;
         return promocaoRepository.findAll();
     }
 
     @Override
-    public PromocaoDTO savePromocao(PromocaoDTO promocaoDTO) {
-
-        //teste repository
-//        connectDataBase();
-//        getPromocao();
-
-
-//        promocaoRepository.put(promocaoDTO);
-        return promocaoDTO;
+    public Iterable<Promocao> getLastPromocoes(Date minDate) {
+        return null;
     }
 
-    private void getPromocao() {
-        final String selectSql = "SELECT * FROM promocao LIMIT 10;";
-
-        try (ResultSet rs = conn.prepareStatement(selectSql).executeQuery()) {
-            while (rs.next()) {
-                String valorUnidade = rs.getString("valorUnidade");
-                LOGGER.info("Promocao: " + valorUnidade);
-            }
-        } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
-        }
-    }
-
-
-    private void connectDataBase() {
-        String url = System.getProperty("cloudsql");
-        try {
-            LOGGER.info("conectando no database");
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            LOGGER.info(e.getMessage());
-        }
+    @Override
+    public Promocao savePromocao(Promocao promocao) {
+        promocao.setLastUpdate(new Date());
+        return promocaoRepository.save(promocao);
     }
 
     public DadosPromocaoDTO getDadosPromocao(){
-
         Iterable<Loja> lojas = lojaRepository.findAll();
         Iterable<Modelo> modelos = modeloRepository.findAll();
         Iterable<Tamanho> tamanhos = tamanhoRepository.findAll();
@@ -105,18 +71,53 @@ public class PromocaoService implements IPromocaoService {
         return dadosPromocaoDTO;
     }
 
-
     public void enviaPushPromocoes() throws SASServiceException {
-        List<Promocao> promocaoList =  Lists.newArrayList(this.getPromocoes());
-        if(promocaoList.size() > 0){
+
+        CronHistory cronHistory = cronService.getLastCron();
+        Date formattedDate = DateUtils.corrigeTimezone(cronHistory.getDoneDate(), TIMEZONE_UTC);
+
+        List<Promocao> promocaoList = promocaoRepository.findByLastUpdateGreaterThanEqual(formattedDate);
+
+        if (promocaoList == null || promocaoList.isEmpty()) {
+            promocaoList = Lists.newArrayList(this.getPromocoes());
+        }
+
+        if (promocaoList.size() > 0) {
+
+            List<Usuario> usuarios = getUsersToSendNotification(promocaoList);
+
+            //TODO: add lista de emails no envio para One Signal
+
             //dispara Push
-            Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
-            try{
-                OneSignalUtil.callPushNotificationService(contents);
-            }catch (SASServiceException e){
-                throw new  SASServiceException(e.getMessage());
+//            Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
+//            try{
+//                OneSignalUtil.callPushNotificationService(contents);
+//            }catch (SASServiceException e){
+//                throw new  SASServiceException(e.getMessage());
+//            }
+        }
+    }
+
+    private List<Usuario> getUsersToSendNotification(List<Promocao> promocoes) {
+        HashSet<Long> modelos = new HashSet<>();
+        HashSet<Long> lojas = new HashSet<>();
+        HashSet<Long> tamanhos = new HashSet<>();
+
+        for (Promocao promocao: promocoes) {
+            if (promocao.getModelo() != null) {
+                modelos.add(promocao.getModelo().getId());
+            }
+
+            if (promocao.getLoja() != null) {
+                lojas.add(promocao.getLoja().getId());
+            }
+
+            if (promocao.getTamanho() != null) {
+                tamanhos.add(promocao.getTamanho().getId());
             }
         }
+
+        return usuarioRepository.findDistinctEmails(lojas, tamanhos, modelos);
     }
 
     public Iterable<PromocaoDTO> getPromocoesApp(){
