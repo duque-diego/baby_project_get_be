@@ -1,6 +1,7 @@
 package app.getfraldas.service;
 
 import app.getfraldas.DTO.DadosPromocaoDTO;
+import app.getfraldas.DTO.PromocaoDTO;
 import app.getfraldas.exception.SASServiceException;
 import app.getfraldas.models.Promocao;
 
@@ -14,4 +15,5 @@ public interface IPromocaoService {
     Promocao savePromocao(Promocao promocao);
     DadosPromocaoDTO getDadosPromocao();
     void enviaPushPromocoes() throws SASServiceException;
+    Iterable<PromocaoDTO> getPromocoesApp();
 }

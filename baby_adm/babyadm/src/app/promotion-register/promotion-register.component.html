@@ -4,12 +4,17 @@
       <mat-card-title>Cadastro de Promoções</mat-card-title>
       <mat-card-content>
           <form class="product-container">
+              
               <mat-form-field class="example-full-width">
-                <input name="productValueUnit" matInput placeholder="Valor unitário do produto" [(ngModel)]="productValueUnit">
+                <input name="productValuePackage" matInput placeholder="Valor do pacote do produto" (blur)="calculateUnitValue()" [(ngModel)]="productValuePackage">
               </mat-form-field>
 
               <mat-form-field class="example-full-width">
-                <input name="productValuePackage" matInput placeholder="Valor do pacote do produto" [(ngModel)]="productValuePackage">
+                <input name="packageQuantity" matInput placeholder="Quantidade de fraldas no pacote" (blur)="calculateUnitValue()" [(ngModel)]="packageQuantity">
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <input name="productValueUnit" matInput placeholder="Valor unitário do produto" [(ngModel)]="productValueUnit" readonly>
               </mat-form-field>
 
               <mat-form-field class="example-full-width">

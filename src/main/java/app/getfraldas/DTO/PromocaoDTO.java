@@ -1,5 +1,6 @@
 package app.getfraldas.DTO;
 
+import app.getfraldas.models.Promocao;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
@@ -72,4 +73,19 @@ public class PromocaoDTO implements Serializable {
     public void setPromotionLink(String promotionLink) {
         this.promotionLink = promotionLink;
     }
+
+    public static PromocaoDTO toPromocaoDTO(Promocao promocao){
+
+        PromocaoDTO promocaoDTO = new PromocaoDTO();
+        promocaoDTO.setId(promocao.getId());
+        promocaoDTO.setLoja(LojaDTO.toLojaDTO(promocao.getLoja()));
+        promocaoDTO.setPackagePrice("R$" +promocao.getValorPacote().toString().replace(".",","));
+        promocaoDTO.setUnitPrice("R$"+promocao.getValorUnidade().toString().replace(".",","));
+        promocaoDTO.setPromotionLink(promocao.getPromoLink());
+        promocaoDTO.setFralda(FraldaDTO.toFraldaDTO(promocao.getModelo()));
+        promocaoDTO.setTamanho(TamanhoDTO.toTamanhoDTO(promocao.getTamanho()));
+
+        return promocaoDTO;
+    }
+
 }

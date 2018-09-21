@@ -1,5 +1,7 @@
 package app.getfraldas.DTO;
 
+import app.getfraldas.models.Loja;
+
 import java.io.Serializable;
 
 /**
@@ -24,5 +26,15 @@ public class LojaDTO implements Serializable {
 
     public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
+    }
+
+    public static LojaDTO toLojaDTO (Loja loja){
+
+        LojaDTO lojaDTO = new LojaDTO();
+        if(loja != null){
+            lojaDTO.setNome(loja.getNome());
+            lojaDTO.setImageLink(loja.getImageLink());
+        }
+        return lojaDTO;
     }
 }

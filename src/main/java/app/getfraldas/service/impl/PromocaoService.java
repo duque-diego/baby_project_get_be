@@ -1,6 +1,7 @@
 package app.getfraldas.service.impl;
 
 import app.getfraldas.DTO.DadosPromocaoDTO;
+import app.getfraldas.DTO.PromocaoDTO;
 import app.getfraldas.exception.SASServiceException;
 import app.getfraldas.models.*;
 import app.getfraldas.repository.*;
@@ -10,10 +11,7 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Service
@@ -122,4 +120,13 @@ public class PromocaoService implements IPromocaoService {
         return usuarioRepository.findDistinctEmails(lojas, tamanhos, modelos);
     }
 
+    public Iterable<PromocaoDTO> getPromocoesApp(){
+
+        Iterable<Promocao> promocoes = promocaoRepository.findAll();
+        List<PromocaoDTO> promocoesDTO = new ArrayList<>();
+        for(Promocao promocao : promocoes){
+            promocoesDTO.add(PromocaoDTO.toPromocaoDTO(promocao));
+        }
+        return promocoesDTO;
+    }
 }

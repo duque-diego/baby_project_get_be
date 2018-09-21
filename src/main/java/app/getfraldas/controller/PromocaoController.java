@@ -1,6 +1,7 @@
 package app.getfraldas.controller;
 
 import app.getfraldas.DTO.DadosPromocaoDTO;
+import app.getfraldas.DTO.PromocaoDTO;
 import app.getfraldas.models.Promocao;
 import app.getfraldas.service.impl.PromocaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class PromocaoController {
     @GetMapping("/promocao/{id}")
     public ResponseEntity<Optional<Promocao>> getPromocao(@PathVariable Long id) {
         return ResponseEntity.ok(promocaoService.getPromocao(id));
+    }
+
+    @GetMapping("/promocoes-app")
+    public ResponseEntity<Iterable<PromocaoDTO>> getPromocoesApp() {
+        return ResponseEntity.ok(promocaoService.getPromocoesApp());
     }
 
     @GetMapping("/promocoes")
