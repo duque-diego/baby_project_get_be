@@ -7,13 +7,16 @@
               <mat-form-field class="example-full-width">
                 <input name="storeName" matInput placeholder="Nome da Loja" [(ngModel)]="storeName">
               </mat-form-field>
-              <button class="button-margin" mat-raised-button (click)="openInput()">
+              <mat-form-field class="example-full-width">
+                <input name="storeName" matInput placeholder="Logo da Loja" [(ngModel)]="url">
+              </mat-form-field>
+              <!-- <button class="button-margin" mat-raised-button (click)="openInput()">
                   Selecione o logo da loja
               </button>
-              <input id="fileInput" hidden type="file" (change)="onSelectFile($event)" >
+              <input id="fileInput" hidden type="file" (change)="onSelectFile($event)" > -->
               <button mat-raised-button color="primary" (click)="register()">Cadastrar</button>
             </form>
-            <img class="img-container" [src]="url" height="300"> 
+            <img *ngIf='url' class="img-container" [src]="url" height="300" width="300"> 
       </mat-card-content>
       <mat-spinner *ngIf='showSpinner'></mat-spinner>
 </mat-card>

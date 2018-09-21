@@ -33,7 +33,7 @@ public class FraldaDTO implements Serializable {
         FraldaDTO fraldaDTO = new FraldaDTO();
         if(modelo != null){
             fraldaDTO.setNome(modelo.getNome());
-            fraldaDTO.setImageLink(fraldaDTO.getImageLink());
+            fraldaDTO.setImageLink(modelo.getImageLink());
         }
         return fraldaDTO;
     }

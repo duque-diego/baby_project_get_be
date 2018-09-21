@@ -15,13 +15,17 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <input name="productUrl" matInput placeholder="Foto do Produto" [(ngModel)]="url">
+              </mat-form-field>
               <!-- <button class="button-margin" mat-raised-button (click)="openInput()">
                   Selecione a foto do produto
-              </button> -->
-              <input id="fileInput" hidden type="file" (change)="onSelectFile($event)" >
+              </button>
+              <input id="fileInput" hidden type="file" (change)="onSelectFile($event)" > -->
               <button mat-raised-button color="primary" (click)="register()">Cadastrar</button>
             </form>
-            <img class="img-container" [src]="url" height="300"> 
+            <img *ngIf='url' class="img-container" [src]="url" height="300" width="300"> 
       </mat-card-content>
       <mat-spinner *ngIf='showSpinner'></mat-spinner>
 </mat-card>
