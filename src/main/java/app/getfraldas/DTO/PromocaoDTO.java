@@ -18,6 +18,8 @@ public class PromocaoDTO implements Serializable {
     private String packagePrice;
     private String promotionLink;
     private String imageLink;
+    private String cupom;
+    private Double discount;
 
     public Long getId() {
         return id;
@@ -83,8 +85,23 @@ public class PromocaoDTO implements Serializable {
         this.imageLink = imageLink;
     }
 
-    public static PromocaoDTO toPromocaoDTO(Promocao promocao){
+    public String getCupom() {
+        return cupom;
+    }
 
+    public void setCupom(String cupom) {
+        this.cupom = cupom;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public static PromocaoDTO toPromocaoDTO(Promocao promocao) {
         PromocaoDTO promocaoDTO = new PromocaoDTO();
         promocaoDTO.setId(promocao.getId());
         promocaoDTO.setLoja(LojaDTO.toLojaDTO(promocao.getLoja()));
@@ -92,6 +109,8 @@ public class PromocaoDTO implements Serializable {
         promocaoDTO.setUnitPrice("R$"+promocao.getValorUnidade().toString().replace(".",","));
         promocaoDTO.setPromotionLink(promocao.getPromoLink());
         promocaoDTO.setImageLink(promocao.getImageLink());
+        promocaoDTO.setCupom(promocao.getCupom());
+        promocaoDTO.setDiscount(promocao.getDiscount());
         promocaoDTO.setFralda(FraldaDTO.toFraldaDTO(promocao.getModelo()));
         promocaoDTO.setTamanho(TamanhoDTO.toTamanhoDTO(promocao.getTamanho()));
 

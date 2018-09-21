@@ -21,6 +21,9 @@ export class PromotionRegisterComponent implements OnInit {
   product:number;
   productSize:number;
   productStore:number;
+  productCupom: string;
+  productDiscount: number;
+
   private stores:Loja[] = [];
   private products:Product[] = [];
   private sizes:Size[] = [];
@@ -49,7 +52,9 @@ export class PromotionRegisterComponent implements OnInit {
       this.product, 
       this.productSize, 
       this.productStore,
-      this.url
+      this.url,
+      this.productCupom,
+      this.productDiscount
     );
     console.log(promotion);
     this.apiPromotionProvider
@@ -62,8 +67,7 @@ export class PromotionRegisterComponent implements OnInit {
       });
   }
 
-  calculateUnitValue(){
-    
+  calculateUnitValue() {
     this.productValuePackage && this.packageQuantity ? this.productValueUnit = this.productValuePackage / this.packageQuantity : "";
   }
 

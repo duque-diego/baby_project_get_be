@@ -30,6 +30,12 @@ public class Promocao {
     @Column(name = "promoLink", nullable = false)
     private String promoLink;
 
+    @Column(name = "cupom")
+    private String cupom;
+
+    @Column(name = "discount")
+    private Double discount;
+
     @JsonIgnore
     @NotNull
     @Column(name = "lastUpdate")
@@ -93,6 +99,22 @@ public class Promocao {
 
     public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
+    }
+
+    public String getCupom() {
+        return cupom;
+    }
+
+    public void setCupom(String cupom) {
+        this.cupom = cupom;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 
     public Modelo getModelo() {

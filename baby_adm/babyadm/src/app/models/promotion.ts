@@ -7,6 +7,9 @@ export class Promotion {
     tamanho: number;
     loja: number;
     imageLink: string;
+    cupom: string;
+    discount: number;
+
     constructor(
       id: number, 
       valorUnidade: number, 
@@ -15,7 +18,9 @@ export class Promotion {
       modelo: number, 
       tamanho: number,
       loja:number,
-      imageLink: string
+      imageLink: string,
+      cupom: string,
+      discount: number
     ) 
     {
       this.id = id;
@@ -26,5 +31,7 @@ export class Promotion {
       this.tamanho = tamanho;
       this.loja = loja;
       this.imageLink = imageLink;
+      this.cupom = cupom;
+      this.discount = discount;
     }
 }

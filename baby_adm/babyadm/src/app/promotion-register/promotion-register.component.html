@@ -20,7 +20,15 @@
               <mat-form-field class="example-full-width">
                 <input name="promotionLink" matInput placeholder="Link da promoção" [(ngModel)]="promotionLink">
               </mat-form-field>
-             
+
+              <mat-form-field class="example-full-width">
+                <input name="productCupom" matInput placeholder="Cupom da promoção" [(ngModel)]="productCupom">
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <input type="number" name="productDiscount" matInput placeholder="Desconto" [(ngModel)]="productDiscount">
+              </mat-form-field>
+
               <mat-form-field>
                 <mat-select name="product" placeholder="Modelo" [(ngModel)]="product" ngDefaultControl>
                   <mat-option  *ngFor="let product of products" [value]="product" >
