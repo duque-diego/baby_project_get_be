@@ -53,12 +53,17 @@
                 </mat-select>
               </mat-form-field>
 
-              <button class="button-margin" mat-raised-button (click)="openInput()">
+              <mat-form-field class="example-full-width">
+                <input name="productUrl" matInput placeholder="Foto do Produto" [(ngModel)]="url">
+              </mat-form-field>
+
+              <!-- <button class="button-margin" mat-raised-button (click)="openInput()">
                 Selecione a foto do produto
               </button>
-              <input id="fileInput" hidden type="file" (change)="onSelectFile($event)">
+              <input id="fileInput" hidden type="file" (change)="onSelectFile($event)"> -->
 
               <button mat-raised-button color="primary" (click)="register()">Cadastrar</button>
+              <img *ngIf='url' class="img-container" [src]="url" height="300" width="300"> 
             </form> 
       </mat-card-content>
       

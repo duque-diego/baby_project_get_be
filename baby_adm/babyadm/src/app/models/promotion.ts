@@ -9,6 +9,7 @@ export class Promotion {
     imageLink: string;
     cupom: string;
     discount: number;
+    quantidade: number;
 
     constructor(
       id: number, 
@@ -20,7 +21,8 @@ export class Promotion {
       loja:number,
       imageLink: string,
       cupom: string,
-      discount: number
+      discount: number,
+      packageQuantity: number
     ) 
     {
       this.id = id;
@@ -33,5 +35,6 @@ export class Promotion {
       this.imageLink = imageLink;
       this.cupom = cupom;
       this.discount = discount;
+      this.quantidade = packageQuantity;
     }
 }

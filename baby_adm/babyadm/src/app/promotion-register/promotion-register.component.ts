@@ -54,7 +54,8 @@ export class PromotionRegisterComponent implements OnInit {
       this.productStore,
       this.url,
       this.productCupom,
-      this.productDiscount
+      this.productDiscount,
+      this.packageQuantity
     );
     console.log(promotion);
     this.apiPromotionProvider

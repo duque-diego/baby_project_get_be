@@ -27,6 +27,10 @@ public class Promocao {
     private Double valorPacote;
 
     @NotNull
+    @Column(name = "quantidade", nullable = false)
+    private Integer quantidade;
+
+    @NotNull
     @Column(name = "promoLink", nullable = false)
     private String promoLink;
 
@@ -139,5 +143,13 @@ public class Promocao {
 
     public void setLoja(Loja loja) {
         this.loja = loja;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }

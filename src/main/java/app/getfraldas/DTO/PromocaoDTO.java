@@ -20,6 +20,7 @@ public class PromocaoDTO implements Serializable {
     private String imageLink;
     private String cupom;
     private Double discount;
+    private Integer quantidade;
 
     public Long getId() {
         return id;
@@ -101,20 +102,36 @@ public class PromocaoDTO implements Serializable {
         this.discount = discount;
     }
 
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
     public static PromocaoDTO toPromocaoDTO(Promocao promocao) {
         PromocaoDTO promocaoDTO = new PromocaoDTO();
         promocaoDTO.setId(promocao.getId());
         promocaoDTO.setLoja(LojaDTO.toLojaDTO(promocao.getLoja()));
-        promocaoDTO.setPackagePrice("R$" +promocao.getValorPacote().toString().replace(".",","));
-        promocaoDTO.setUnitPrice("R$"+promocao.getValorUnidade().toString().replace(".",","));
+        promocaoDTO.setPackagePrice("R$ " +promocao.getValorPacote().toString().replace(".",",")+checkIfHasDecimalPart(promocao.getValorPacote())+ "/pct");
+        promocaoDTO.setUnitPrice("R$ "+promocao.getValorUnidade().toString().replace(".",",")+checkIfHasDecimalPart(promocao.getValorUnidade())+ "/un");
         promocaoDTO.setPromotionLink(promocao.getPromoLink());
         promocaoDTO.setImageLink(promocao.getImageLink());
         promocaoDTO.setCupom(promocao.getCupom());
         promocaoDTO.setDiscount(promocao.getDiscount());
         promocaoDTO.setFralda(FraldaDTO.toFraldaDTO(promocao.getModelo()));
         promocaoDTO.setTamanho(TamanhoDTO.toTamanhoDTO(promocao.getTamanho()));
+        promocaoDTO.setQuantidade(promocao.getQuantidade());
 
         return promocaoDTO;
+    }
+
+    private static String checkIfHasDecimalPart (Double value){
+        if(value % 1 == 0) {
+            return "0";
+        }
+        return "";
     }
 
 }

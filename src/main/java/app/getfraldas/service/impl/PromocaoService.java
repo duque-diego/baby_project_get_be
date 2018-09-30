@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -56,7 +57,11 @@ public class PromocaoService implements IPromocaoService {
 
     @Override
     public Promocao savePromocao(Promocao promocao) {
+
+        DecimalFormat df2 = new DecimalFormat(".##");
         promocao.setLastUpdate(new Date());
+        promocao.setValorPacote(Double.parseDouble(df2.format(promocao.getValorPacote())));
+        promocao.setValorUnidade(Double.parseDouble(df2.format(promocao.getValorUnidade())));
         return promocaoRepository.save(promocao);
     }
 
@@ -129,7 +134,7 @@ public class PromocaoService implements IPromocaoService {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(userId);
 
         if (!usuarioOptional.isPresent() || usuarioOptional.get().getTamanhos() == null || usuarioOptional.get().getTamanhos().isEmpty()) {
-            return null;
+            return modelToDto(promocaoRepository.findAll());
         }
 
         HashSet<Long> tamanhos = new HashSet<>();
