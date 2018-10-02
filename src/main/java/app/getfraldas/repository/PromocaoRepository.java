@@ -20,12 +20,29 @@ public interface PromocaoRepository extends CrudRepository<Promocao, Long> {
             @Param("marcas") HashSet<Long> marcas
     );
 
+    Iterable<Promocao> findByValorUnidadeLessThanEqualAndTamanhoIdInAndModeloMarcaIdInOrderByValorUnidadeAsc(
+            @Param("maxValor") Double maxValor,
+            @Param("tamanhos") HashSet<Long> tamanhos,
+            @Param("marcas") HashSet<Long> marcas
+    );
+
     Iterable<Promocao> findByTamanhoIdInOrderByValorUnidadeAsc(
+            @Param("tamanhos") HashSet<Long> tamanhos
+    );
+
+    Iterable<Promocao> findByValorUnidadeLessThanEqualAndTamanhoIdInOrderByValorUnidadeAsc(
+            @Param("maxValor") Double maxValor,
             @Param("tamanhos") HashSet<Long> tamanhos
     );
 
     Iterable<Promocao> findByModeloMarcaIdInOrderByValorUnidadeAsc(
             @Param("marcas") HashSet<Long> marcas
     );
+
+    Iterable<Promocao> findByValorUnidadeLessThanEqualAndModeloMarcaIdInOrderByValorUnidadeAsc(
+            @Param("maxValor") Double maxValor,
+            @Param("marcas") HashSet<Long> marcas
+    );
+
 
 }

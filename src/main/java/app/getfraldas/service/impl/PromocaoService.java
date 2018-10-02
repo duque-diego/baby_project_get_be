@@ -148,9 +148,16 @@ public class PromocaoService implements IPromocaoService {
 
         if (usuarioOptional.isPresent()) {
             Usuario usuario = usuarioOptional.get();
+            Boolean possuiValorMax = usuario.getValorUnidadeMax() != null && usuario.getValorUnidadeMax().compareTo(0d) > 0;
 
             if (usuario.getTamanhos() != null && !usuario.getTamanhos().isEmpty() &&
                     usuario.getMarcas() != null && !usuario.getMarcas().isEmpty()) {
+
+                if (possuiValorMax) {
+                    return modelToDto(promocaoRepository.findByValorUnidadeLessThanEqualAndTamanhoIdInAndModeloMarcaIdInOrderByValorUnidadeAsc(
+                            usuario.getValorUnidadeMax(), getTamanhosIds(usuario.getTamanhos()), getMarcasIds(usuario.getMarcas())
+                    ));
+                }
 
                 return modelToDto(promocaoRepository.findByTamanhoIdInAndModeloMarcaIdInOrderByValorUnidadeAsc(
                         getTamanhosIds(usuario.getTamanhos()), getMarcasIds(usuario.getMarcas())
@@ -158,10 +165,22 @@ public class PromocaoService implements IPromocaoService {
             }
 
             if (usuario.getTamanhos() != null && !usuario.getTamanhos().isEmpty()) {
+                if (possuiValorMax) {
+                    return modelToDto(promocaoRepository.findByValorUnidadeLessThanEqualAndTamanhoIdInOrderByValorUnidadeAsc(
+                            usuario.getValorUnidadeMax(), getTamanhosIds(usuario.getTamanhos())
+                    ));
+                }
+
                 return modelToDto(promocaoRepository.findByTamanhoIdInOrderByValorUnidadeAsc(getTamanhosIds(usuario.getTamanhos())));
             }
 
             if (usuario.getMarcas() != null && !usuario.getMarcas().isEmpty()) {
+                if (possuiValorMax) {
+                    return modelToDto(promocaoRepository.findByValorUnidadeLessThanEqualAndModeloMarcaIdInOrderByValorUnidadeAsc(
+                            usuario.getValorUnidadeMax(), getMarcasIds(usuario.getMarcas())
+                    ));
+                }
+
                 return modelToDto(promocaoRepository.findByModeloMarcaIdInOrderByValorUnidadeAsc(getMarcasIds(usuario.getMarcas())));
             }
 
