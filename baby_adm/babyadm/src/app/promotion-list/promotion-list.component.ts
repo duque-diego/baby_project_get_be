@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Promotion } from '../models/promotion';
 import { ApiPromotionProvider } from '../services/api-promotion-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-promotion-list',
@@ -11,14 +12,14 @@ import { ApiPromotionProvider } from '../services/api-promotion-data';
 export class PromotionListComponent implements OnInit {
 
   ELEMENT_DATA: Promotion[] = [];
-  displayedColumns: string[] = ['id', 'unitValue', 'packageValue', 'promotionLink', 'productId', 'sizeId', 'storeId'];
+  displayedColumns: string[] = ['id',  'productId', 'sizeId', 'packageValue', 'quantidade','unitValue','cupom', 'desconto',  'storeId', 'editar'];
   dataSource; 
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  constructor(public apiPromotionProvider:ApiPromotionProvider) {
+  constructor(public apiPromotionProvider:ApiPromotionProvider, public router:Router) {
     this.apiPromotionProvider
       .getPromotions()
       .subscribe(response => {
@@ -30,6 +31,10 @@ export class PromotionListComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  editar(id){
+    this.router.navigate(['promotion-register', id]);
   }
 
 }

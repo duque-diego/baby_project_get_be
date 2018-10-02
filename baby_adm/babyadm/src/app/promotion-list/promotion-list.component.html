@@ -10,19 +10,29 @@
     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="unitValue">
-    <th mat-header-cell *matHeaderCellDef> Valor Unitário </th>
-    <td mat-cell *matCellDef="let element"> {{element.valorUnidade}} </td>
-  </ng-container>
-
   <ng-container matColumnDef="packageValue">
     <th mat-header-cell *matHeaderCellDef> Valor do Pacote</th>
     <td mat-cell *matCellDef="let element"> {{element.valorPacote}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="promotionLink">
-    <th mat-header-cell *matHeaderCellDef> Link da Promoção </th>
-    <td mat-cell *matCellDef="let element"> {{element.promoLink}} </td>
+  <ng-container matColumnDef="quantidade">
+    <th mat-header-cell *matHeaderCellDef> Quantidade </th>
+    <td mat-cell *matCellDef="let element"> {{element.quantidade}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="unitValue">
+    <th mat-header-cell *matHeaderCellDef> Valor Unitário </th>
+    <td mat-cell *matCellDef="let element"> {{element.valorUnidade}} </td>
+  </ng-container>
+
+  <ng-container  matColumnDef="cupom">
+    <th mat-header-cell *matHeaderCellDef> Cupom </th>
+    <td mat-cell  *matCellDef="let element"> {{element.cupom}} </td>
+  </ng-container>
+
+  <ng-container  matColumnDef="desconto">
+    <th mat-header-cell *matHeaderCellDef> Desconto </th>
+    <td mat-cell  *matCellDef="let element"> {{element.discount}} </td>
   </ng-container>
 
   <ng-container matColumnDef="productId">
@@ -38,6 +48,11 @@
   <ng-container matColumnDef="storeId">
     <th mat-header-cell *matHeaderCellDef> Loja </th>
     <td mat-cell *matCellDef="let element"> {{element.loja.nome}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="editar">
+    <th mat-header-cell *matHeaderCellDef> Editar </th>
+    <td mat-cell *matCellDef="let element"> <button (click)="editar(element.id)">Editar</button> </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

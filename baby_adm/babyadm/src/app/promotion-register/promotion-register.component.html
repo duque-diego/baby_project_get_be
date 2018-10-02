@@ -3,7 +3,7 @@
   <mat-card>
       <mat-card-title>Cadastro de Promoções</mat-card-title>
       <mat-card-content>
-          <form class="product-container">
+          <form class="product-container" >
               
               <mat-form-field class="example-full-width">
                 <input name="productValuePackage" matInput placeholder="Valor do pacote do produto" (blur)="calculateUnitValue()" [(ngModel)]="productValuePackage">
@@ -29,24 +29,24 @@
                 <input type="number" name="productDiscount" matInput placeholder="Desconto" [(ngModel)]="productDiscount">
               </mat-form-field>
 
-              <mat-form-field>
-                <mat-select name="product" placeholder="Modelo" [(ngModel)]="product" ngDefaultControl>
+              <mat-form-field *ngIf="!isEdicao" >
+                <mat-select name="product" placeholder="Modelo" [(ngModel)]="product" ngDefaultControl >
                   <mat-option  *ngFor="let product of products" [value]="product" >
                     {{product.nome}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field>
-                <mat-select name="productSize" placeholder="Tamanho" [(ngModel)]="productSize" ngDefaultControl>
+              <mat-form-field *ngIf="!isEdicao">
+                <mat-select  name="productSize" placeholder="Tamanho" [(ngModel)]="productSize" ngDefaultControl>
                   <mat-option  *ngFor="let size of sizes" [value]="size" >
                     {{size.nome}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field>
-                <mat-select name="productStore" placeholder="Loja" [(ngModel)]="productStore" ngDefaultControl>
+              <mat-form-field *ngIf="!isEdicao"> 
+                <mat-select  name="productStore" placeholder="Loja" [(ngModel)]="productStore" ngDefaultControl>
                   <mat-option  *ngFor="let store of stores" [value]="store" >
                     {{store.nome}}
                   </mat-option>
@@ -62,7 +62,8 @@
               </button>
               <input id="fileInput" hidden type="file" (change)="onSelectFile($event)"> -->
 
-              <button mat-raised-button color="primary" (click)="register()">Cadastrar</button>
+              <button *ngIf="!isEdicao" mat-raised-button color="primary" (click)="register()">Cadastrar</button>
+              <button *ngIf="isEdicao" mat-raised-button color="primary" (click)="update()">Atualizar</button>
               <img *ngIf='url' class="img-container" [src]="url" height="300" width="300"> 
             </form> 
       </mat-card-content>
