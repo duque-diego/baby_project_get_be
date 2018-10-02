@@ -30,6 +30,12 @@ public class Usuario {
     @Column(name = "cpf")
     private String cpf;
 
+    @Column(name = "valorUnidadeMax")
+    private Double valorUnidadeMax;
+
+    @Column(name = "receberPromo")
+    private Boolean receberPromo;
+
     @OneToMany(mappedBy = "usuario")
     private Set<Bebe> bebes;
 
@@ -98,6 +104,22 @@ public class Usuario {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public Double getValorUnidadeMax() {
+        return valorUnidadeMax;
+    }
+
+    public void setValorUnidadeMax(Double valorUnidadeMax) {
+        this.valorUnidadeMax = valorUnidadeMax;
+    }
+
+    public Boolean getReceberPromo() {
+        return receberPromo;
+    }
+
+    public void setReceberPromo(Boolean receberPromo) {
+        this.receberPromo = receberPromo;
     }
 
     public Set<Bebe> getBebes() {

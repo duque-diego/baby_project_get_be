@@ -77,7 +77,6 @@ public class PromocaoService implements IPromocaoService {
     }
 
     public void enviaPushPromocoes() throws SASServiceException {
-
         CronHistory cronHistory = cronService.getLastCron();
         Date formattedDate = DateUtils.corrigeTimezone(cronHistory.getDoneDate(), TIMEZONE_UTC);
 
@@ -104,6 +103,7 @@ public class PromocaoService implements IPromocaoService {
     }
 
     private List<Usuario> getUsersToSendNotification(List<Promocao> promocoes) {
+        Double maxValue = 0d;
         HashSet<Long> modelos = new HashSet<>();
         HashSet<Long> lojas = new HashSet<>();
         HashSet<Long> tamanhos = new HashSet<>();
@@ -120,9 +120,18 @@ public class PromocaoService implements IPromocaoService {
             if (promocao.getTamanho() != null) {
                 tamanhos.add(promocao.getTamanho().getId());
             }
+
+            if (promocao.getValorUnidade() != null) {
+                if (maxValue.equals(0d)) {
+                    maxValue = promocao.getValorUnidade();
+
+                } else if (maxValue.compareTo(promocao.getValorUnidade()) > 0) {
+                    maxValue = promocao.getValorUnidade();
+                }
+            }
         }
 
-        return usuarioRepository.findDistinctEmails(lojas, tamanhos, modelos);
+        return usuarioRepository.findDistinctEmails(maxValue, lojas, tamanhos, modelos);
     }
 
     public Iterable<PromocaoDTO> getPromocoesApp () {
@@ -130,20 +139,56 @@ public class PromocaoService implements IPromocaoService {
         return modelToDto(promocoes);
     }
 
-    public Iterable<PromocaoDTO> getPromocoesByTamanho(Long userId) {
+    public Iterable<PromocaoDTO> getPromocoesToUserId(Long userId) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(userId);
 
-        if (!usuarioOptional.isPresent() || usuarioOptional.get().getTamanhos() == null || usuarioOptional.get().getTamanhos().isEmpty()) {
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+
+            if (usuario.getTamanhos() != null && !usuario.getTamanhos().isEmpty() &&
+                    usuario.getMarcas() != null && !usuario.getMarcas().isEmpty()) {
+
+                return modelToDto(promocaoRepository.findByTamanhoIdInAndModeloMarcaIdInOrderByValorUnidadeAsc(
+                        getTamanhosIds(usuario.getTamanhos()), getMarcasIds(usuario.getMarcas())
+                ));
+            }
+
+            if (usuario.getTamanhos() != null && !usuario.getTamanhos().isEmpty()) {
+                return modelToDto(promocaoRepository.findByTamanhoIdInOrderByValorUnidadeAsc(getTamanhosIds(usuario.getTamanhos())));
+            }
+
+            if (usuario.getMarcas() != null && !usuario.getMarcas().isEmpty()) {
+                return modelToDto(promocaoRepository.findByModeloMarcaIdInOrderByValorUnidadeAsc(getMarcasIds(usuario.getMarcas())));
+            }
+
             return modelToDto(promocaoRepository.findAll());
         }
 
-        HashSet<Long> tamanhos = new HashSet<>();
+        return null;
+    }
 
-        for (Tamanho tamanho : usuarioOptional.get().getTamanhos()) {
-            tamanhos.add(tamanho.getId());
+    private HashSet<Long> getTamanhosIds(Set<Tamanho> tamanhos) {
+        HashSet<Long> tamanhosId = new HashSet<>();
+
+        if (tamanhos != null) {
+            for (Tamanho tamanho : tamanhos) {
+                tamanhosId.add(tamanho.getId());
+            }
         }
 
-        return modelToDto(promocaoRepository.findByTamanhoIdInOrderByValorUnidadeAsc(tamanhos));
+        return tamanhosId;
+    }
+
+    private HashSet<Long> getMarcasIds(Set<Marca> marcas) {
+        HashSet<Long> marcasId = new HashSet<>();
+
+        if (marcas != null) {
+            for (Marca marca: marcas) {
+                marcasId.add(marca.getId());
+            }
+        }
+
+        return marcasId;
     }
 
     private List<PromocaoDTO> modelToDto(Iterable<Promocao> promocoesModel) {
