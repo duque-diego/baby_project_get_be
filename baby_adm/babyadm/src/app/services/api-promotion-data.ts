@@ -60,6 +60,17 @@ export class ApiPromotionProvider {
     return this.restApiService.get(call);
   }
 
+  getPromotionById(promotionId:number){
+    let call: IRestApiCall = {
+      baseUrl: SERVER_API_URL,
+      endpoint: "/api/promocao/"+promotionId,
+      body: null,
+      headers: {"Content-Type": "application/json"},
+      method: RequestMethod.Get
+    } 
+    return this.restApiService.get(call).map((response:any) => parseJsonPromotionEdit(response));;
+  }
+
   getPromotions() : Observable<Promotion[]>{
     let call: IRestApiCall = {
       baseUrl: SERVER_API_URL,
@@ -84,4 +95,22 @@ function parseJsonPromotion(data:any) : Promotion[]{
     promotions.push(product);  
   });
   return promotions;
+}
+
+function parseJsonPromotionEdit(data:any) : Promotion{
+
+  let promotion = new Promotion(
+    data.id, 
+    data.valorUnidade, 
+    data.valorPacote, 
+    data.promoLink,
+    data.modelo, 
+    data.tamanho,
+    data.loja,
+    data.imageLink,
+    data.cupom,
+    data.discount,
+    data.quantidade
+  );
+  return promotion;
 }

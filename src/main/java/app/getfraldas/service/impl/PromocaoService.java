@@ -58,11 +58,15 @@ public class PromocaoService implements IPromocaoService {
     @Override
     public Promocao savePromocao(Promocao promocao) {
 
-        DecimalFormat df2 = new DecimalFormat(".##");
         promocao.setLastUpdate(new Date());
-        promocao.setValorPacote(Double.parseDouble(df2.format(promocao.getValorPacote())));
-        promocao.setValorUnidade(Double.parseDouble(df2.format(promocao.getValorUnidade())));
+        if(promocao == null){
+            DecimalFormat df2 = new DecimalFormat(".##");
+            promocao.setValorPacote(Double.parseDouble(df2.format(promocao.getValorPacote())));
+            promocao.setValorUnidade(Double.parseDouble(df2.format(promocao.getValorUnidade())));
+
+        }
         return promocaoRepository.save(promocao);
+
     }
 
     public DadosPromocaoDTO getDadosPromocao(){

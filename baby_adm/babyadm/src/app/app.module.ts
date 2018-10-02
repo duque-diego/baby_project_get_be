@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule,MatInputModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { ProductListComponent } from './product-list/product-list.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { routingModule } from './app.routing';
 import { LoginComponent } from './login/login.component';
 import { ProductRegisterComponent } from './product-register/product-register.component';
@@ -67,7 +67,8 @@ import { BrandRegisterComponent } from './brand-register/brand-register.componen
     routingModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [RestApiProvider, ApiModelProvider, ApiPromotionProvider, ApiStoreProvider, ApiBrandProvider],
   bootstrap: [AppComponent]

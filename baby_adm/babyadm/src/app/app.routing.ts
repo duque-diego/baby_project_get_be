@@ -20,6 +20,7 @@ const routes: Routes = [
     { path: "store-register", component: StoreRegisterComponent },
     { path: "store-list", component: StoreListComponent },
     { path: "promotion-register", component: PromotionRegisterComponent },
+    { path: "promotion-register/:id", component: PromotionRegisterComponent },
     { path: "promotion-list", component: PromotionListComponent },
     { path: "brand-register", component: BrandRegisterComponent },
     { path: "brand-list", component: BrandListComponent },

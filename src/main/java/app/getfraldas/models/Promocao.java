@@ -26,7 +26,6 @@ public class Promocao {
     @Column(name = "valorPacote", nullable = false)
     private Double valorPacote;
 
-    @NotNull
     @Column(name = "quantidade", nullable = false)
     private Integer quantidade;
 
