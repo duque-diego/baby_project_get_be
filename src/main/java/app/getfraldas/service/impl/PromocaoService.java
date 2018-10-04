@@ -1,5 +1,6 @@
 package app.getfraldas.service.impl;
 
+import app.getfraldas.DTO.Contents;
 import app.getfraldas.DTO.DadosPromocaoDTO;
 import app.getfraldas.DTO.PromocaoDTO;
 import app.getfraldas.exception.SASServiceException;
@@ -7,6 +8,7 @@ import app.getfraldas.models.*;
 import app.getfraldas.repository.*;
 import app.getfraldas.service.IPromocaoService;
 import app.getfraldas.utils.DateUtils;
+import app.getfraldas.utils.OneSignalUtil;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,12 +61,15 @@ public class PromocaoService implements IPromocaoService {
     public Promocao savePromocao(Promocao promocao) {
 
         promocao.setLastUpdate(new Date());
-        if(promocao == null){
-            DecimalFormat df2 = new DecimalFormat(".##");
-            promocao.setValorPacote(Double.parseDouble(df2.format(promocao.getValorPacote())));
-            promocao.setValorUnidade(Double.parseDouble(df2.format(promocao.getValorUnidade())));
-
-        }
+//        if(promocao == null){
+//
+//            promocao.setValorPacote(Double.parseDouble(df2.format(promocao.getValorPacote())));
+//            promocao.setValorUnidade(Double.parseDouble(df2.format(promocao.getValorUnidade())));
+//
+//        }
+        DecimalFormat df2 = new DecimalFormat(".##");
+        promocao.setValorPacote(Double.parseDouble(df2.format(promocao.getValorPacote())));
+        promocao.setValorUnidade(Double.parseDouble(df2.format(promocao.getValorUnidade())));
         return promocaoRepository.save(promocao);
 
     }
@@ -97,12 +102,12 @@ public class PromocaoService implements IPromocaoService {
             //TODO: add lista de emails no envio para One Signal
 
             //dispara Push
-//            Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
-//            try{
-//                OneSignalUtil.callPushNotificationService(contents);
-//            }catch (SASServiceException e){
-//                throw new  SASServiceException(e.getMessage());
-//            }
+            Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
+            try{
+                OneSignalUtil.callPushNotificationService(contents);
+            }catch (SASServiceException e){
+                throw new  SASServiceException(e.getMessage());
+            }
         }
     }
 

@@ -114,8 +114,8 @@ public class PromocaoDTO implements Serializable {
         PromocaoDTO promocaoDTO = new PromocaoDTO();
         promocaoDTO.setId(promocao.getId());
         promocaoDTO.setLoja(LojaDTO.toLojaDTO(promocao.getLoja()));
-        promocaoDTO.setPackagePrice("R$ " +promocao.getValorPacote().toString().replace(".",",")+checkIfHasDecimalPart(promocao.getValorPacote())+ "/pct");
-        promocaoDTO.setUnitPrice("R$ "+promocao.getValorUnidade().toString().replace(".",",")+checkIfHasDecimalPart(promocao.getValorUnidade())+ "/un");
+        promocaoDTO.setPackagePrice("R$ " +String.format("%.2f", promocao.getValorPacote()).toString().replace(".",",")+ "/pct");
+        promocaoDTO.setUnitPrice("R$ "+String.format("%.2f", promocao.getValorUnidade()).toString().replace(".",",")+ "/un");
         promocaoDTO.setPromotionLink(promocao.getPromoLink());
         promocaoDTO.setImageLink(promocao.getImageLink());
         promocaoDTO.setCupom(promocao.getCupom());
@@ -124,14 +124,17 @@ public class PromocaoDTO implements Serializable {
         promocaoDTO.setTamanho(TamanhoDTO.toTamanhoDTO(promocao.getTamanho()));
         promocaoDTO.setQuantidade(promocao.getQuantidade());
 
+
         return promocaoDTO;
     }
 
-    private static String checkIfHasDecimalPart (Double value){
-        if(value % 1 == 0) {
-            return "0";
-        }
-        return "";
-    }
+//    private static String checkIfHasDecimalPart (Double value){
+//
+//        value.
+//        if(value % 1 == 0) {
+//            return "0";
+//        }
+//        return "";
+//    }
 
 }
