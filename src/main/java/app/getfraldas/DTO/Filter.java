@@ -18,6 +18,9 @@ public class Filter {
     @SerializedName("value")
     @Expose
     private String value;
+    @SerializedName("operator")
+    @Expose
+    private String operator;
 
     public String getField() {
         return field;
@@ -49,6 +52,15 @@ public class Filter {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
 }

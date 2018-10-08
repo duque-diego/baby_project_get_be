@@ -43,7 +43,7 @@ public class OneSignalUtil {
         return contents;
     }
 
-    public static SasRetorno callPushNotificationService( Contents contents) throws SASServiceException {
+    public static SasRetorno callPushNotificationService( Contents contents, List<Filter> filterList) throws SASServiceException {
 
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
@@ -51,12 +51,10 @@ public class OneSignalUtil {
         headers.add(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);
 
         List<String> segmentosList = new ArrayList<>();
-        segmentosList.add("All");
-        segmentosList.add("Active Users");
         OneSignalPushParameters oneSignalPushParameters = new OneSignalPushParameters();
         oneSignalPushParameters.setapp_Id(Constants.PUSHAPPID_PROMO);
         oneSignalPushParameters.setContents(contents);
-        oneSignalPushParameters.setIncluded_segments(segmentosList);
+        oneSignalPushParameters.setFilters(filterList);
 
         try {
             ResponseEntity<Object> resposta = HttpClientUtil.post(Constants.ONE_SIGNAL_BASE_URL, oneSignalPushParameters, headers);

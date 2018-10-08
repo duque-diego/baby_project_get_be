@@ -1,5 +1,5 @@
-
 package app.getfraldas.DTO;
+
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,11 +11,9 @@ public class OneSignalPushParameters {
     @SerializedName("app_id")
     @Expose
     private String app_id;
-
-    @SerializedName("included_segments")
+    @SerializedName("filters")
     @Expose
-    private List<String> included_segments;
-
+    private List<Filter> filters = null;
     @SerializedName("contents")
     @Expose
     private Contents contents;
@@ -28,6 +26,14 @@ public class OneSignalPushParameters {
         this.app_id = app_id;
     }
 
+    public List<Filter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<Filter> filters) {
+        this.filters = filters;
+    }
+
     public Contents getContents() {
         return contents;
     }
@@ -36,11 +42,4 @@ public class OneSignalPushParameters {
         this.contents = contents;
     }
 
-    public List<String> getIncluded_segments() {
-        return included_segments;
-    }
-
-    public void setIncluded_segments(List<String> includedSegments) {
-        this.included_segments = includedSegments;
-    }
 }

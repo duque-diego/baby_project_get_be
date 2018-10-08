@@ -2,6 +2,7 @@ package app.getfraldas.service.impl;
 
 import app.getfraldas.DTO.Contents;
 import app.getfraldas.DTO.DadosPromocaoDTO;
+import app.getfraldas.DTO.Filter;
 import app.getfraldas.DTO.PromocaoDTO;
 import app.getfraldas.exception.SASServiceException;
 import app.getfraldas.models.*;
@@ -99,12 +100,33 @@ public class PromocaoService implements IPromocaoService {
 
             List<Usuario> usuarios = getUsersToSendNotification(promocaoList);
 
-            //TODO: add lista de emails no envio para One Signal
+            Iterator<Usuario> usuarioIterator = usuarios.iterator();
+            List<Filter> filterList = new ArrayList<Filter>();
+
+            int usuarioCount = 0;
+
+            while(usuarioIterator.hasNext()){
+
+                Filter filter = new Filter();
+                filter.setField("tag");
+                filter.setKey("email");
+                filter.setRelation("=");
+                filter.setValue(usuarios.get(usuarioCount).getEmail());
+                if(usuarioIterator.hasNext()){
+                    filter.setOperator("OR");
+                }else{
+                    filter.setOperator("null");
+                }
+                filterList.add(filter);
+                usuarioCount++;
+            }
 
             //dispara Push
             Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
+            OneSignalUtil.callPushNotificationService(contents, filterList);
+
             try{
-                OneSignalUtil.callPushNotificationService(contents);
+                OneSignalUtil.callPushNotificationService(contents, filterList);
             }catch (SASServiceException e){
                 throw new  SASServiceException(e.getMessage());
             }
