@@ -121,12 +121,12 @@ public class PromocaoService implements IPromocaoService {
                 usuarioCount++;
             }
 
-            //dispara Push
-            Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
-            OneSignalUtil.callPushNotificationService(contents, filterList);
-
             try{
-                OneSignalUtil.callPushNotificationService(contents, filterList);
+                //dispara Push
+                if(filterList.size() > 0){
+                    Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
+                    OneSignalUtil.callPushNotificationService(contents, filterList);
+                }
             }catch (SASServiceException e){
                 throw new  SASServiceException(e.getMessage());
             }
