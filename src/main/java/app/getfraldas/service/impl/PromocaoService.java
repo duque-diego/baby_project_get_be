@@ -94,35 +94,33 @@ public class PromocaoService implements IPromocaoService {
         List<Promocao> promocaoList = promocaoRepository.findByLastUpdateGreaterThanEqual(formattedDate);
 
         if (promocaoList != null && promocaoList.size() > 0) {
-
             LOGGER.info("Promoções encontradas: " + promocaoList.toString());
+
             List<Usuario> usuarios = getUsersToSendNotification(promocaoList);
 
             LOGGER.info("Buscando usuários");
 
             if (usuarios != null && usuarios.size() > 0) {
-
-                LOGGER.info("Usuários encontrados: " + usuarios.toString());
-
                 Iterator<Usuario> usuarioIterator = usuarios.iterator();
-                List<Filter> filterList = new ArrayList<Filter>();
+                List<Filter> filterList = new ArrayList<>();
 
-                int usuarioCount = 0;
-
-                while(usuarioIterator.hasNext()){
-
+                while(usuarioIterator.hasNext()) {
+                    Usuario usuario = usuarioIterator.next();
                     Filter filter = new Filter();
                     filter.setField("tag");
                     filter.setKey("email");
                     filter.setRelation("=");
-                    filter.setValue(usuarios.get(usuarioCount).getEmail());
+                    filter.setValue(usuario.getEmail());
+
+                    LOGGER.info("Usuário encontrado: " + usuario.getEmail());
+
                     if(usuarioIterator.hasNext()){
                         filter.setOperator("OR");
-                    }else{
+                    } else {
                         filter.setOperator("null");
                     }
+
                     filterList.add(filter);
-                    usuarioCount++;
                 }
 
                 try{
