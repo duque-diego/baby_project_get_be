@@ -90,62 +90,62 @@ public class PromocaoService implements IPromocaoService {
         CronHistory cronHistory = cronService.getLastCron();
         Date formattedDate = DateUtils.corrigeTimezone(cronHistory.getDoneDate(), TIMEZONE_UTC);
 
+        LOGGER.info("Buscando promoções com datas > " + formattedDate.getTime());
         List<Promocao> promocaoList = promocaoRepository.findByLastUpdateGreaterThanEqual(formattedDate);
 
-        if (promocaoList == null || promocaoList.isEmpty()) {
-            promocaoList = Lists.newArrayList(this.getPromocoes());
-        }
+        if (promocaoList != null && promocaoList.size() > 0) {
 
-        if (promocaoList.size() > 0) {
-
+            LOGGER.info("Promoções encontradas: " + promocaoList.toString());
             List<Usuario> usuarios = getUsersToSendNotification(promocaoList);
 
-            Iterator<Usuario> usuarioIterator = usuarios.iterator();
-            List<Filter> filterList = new ArrayList<Filter>();
+            LOGGER.info("Buscando usuários");
 
-            int usuarioCount = 0;
+            if (usuarios != null && usuarios.size() > 0) {
 
-            while(usuarioIterator.hasNext()){
+                LOGGER.info("Usuários encontrados: " + usuarios.toString());
 
-                Filter filter = new Filter();
-                filter.setField("tag");
-                filter.setKey("email");
-                filter.setRelation("=");
-                filter.setValue(usuarios.get(usuarioCount).getEmail());
-                if(usuarioIterator.hasNext()){
-                    filter.setOperator("OR");
-                }else{
-                    filter.setOperator("null");
+                Iterator<Usuario> usuarioIterator = usuarios.iterator();
+                List<Filter> filterList = new ArrayList<Filter>();
+
+                int usuarioCount = 0;
+
+                while(usuarioIterator.hasNext()){
+
+                    Filter filter = new Filter();
+                    filter.setField("tag");
+                    filter.setKey("email");
+                    filter.setRelation("=");
+                    filter.setValue(usuarios.get(usuarioCount).getEmail());
+                    if(usuarioIterator.hasNext()){
+                        filter.setOperator("OR");
+                    }else{
+                        filter.setOperator("null");
+                    }
+                    filterList.add(filter);
+                    usuarioCount++;
                 }
-                filterList.add(filter);
-                usuarioCount++;
-            }
 
-            try{
-                //dispara Push
-                if(filterList.size() > 0){
-                    Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
-                    OneSignalUtil.callPushNotificationService(contents, filterList);
+                try{
+                    //dispara Push
+                    if(filterList.size() > 0){
+                        Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
+                        OneSignalUtil.callPushNotificationService(contents, filterList);
+                    }
+                }catch (SASServiceException e){
+                    throw new  SASServiceException(e.getMessage());
                 }
-            }catch (SASServiceException e){
-                throw new  SASServiceException(e.getMessage());
             }
         }
     }
 
     private List<Usuario> getUsersToSendNotification(List<Promocao> promocoes) {
         Double maxValue = 0d;
-        HashSet<Long> modelos = new HashSet<>();
-        HashSet<Long> lojas = new HashSet<>();
+        HashSet<Long> marcas = new HashSet<>();
         HashSet<Long> tamanhos = new HashSet<>();
 
         for (Promocao promocao: promocoes) {
             if (promocao.getModelo() != null) {
-                modelos.add(promocao.getModelo().getId());
-            }
-
-            if (promocao.getLoja() != null) {
-                lojas.add(promocao.getLoja().getId());
+                marcas.add(promocao.getModelo().getMarca().getId());
             }
 
             if (promocao.getTamanho() != null) {
@@ -162,7 +162,9 @@ public class PromocaoService implements IPromocaoService {
             }
         }
 
-        return usuarioRepository.findDistinctEmails(maxValue, lojas, tamanhos, modelos);
+        LOGGER.info("Buscando usuarios - maxValue: " + maxValue + " tamanhos: " + tamanhos.toString() + " marcas: " + marcas.toString());
+
+        return usuarioRepository.findDistinctEmails(maxValue, tamanhos, marcas);
     }
 
     public Iterable<PromocaoDTO> getPromocoesApp () {

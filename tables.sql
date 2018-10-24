@@ -81,6 +81,12 @@ create table promocao(
     FOREIGN KEY (lojaId) REFERENCES loja(id)
 );
 
+CREATE TABLE `cron_history` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `done_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
 insert into promocao (valorUnidade, valorPacote, promoLink) values (1.99, 20.99, 'https://google.com');
 
 INSERT INTO usuario (email, nome, senha, telefone, cpf) values ('teste2@teste.com', 'Joao', '123', '229999-0000', '223.123.123-33');

@@ -17,13 +17,12 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
     @Modifying
     @Query(value = "select DISTINCT u.id, u.email, u.nome, u.senha, u.telefone, u.cpf, u.receber_promo, u.valor_unidade_max \n" +
-            "from usuario u join usuario_loja ul join usuario_tamanho ut join usuario_marca um\n" +
+            "from usuario u join usuario_tamanho ut join usuario_marca um\n" +
             "where u.receber_promo = true and u.valor_unidade_max >= :maxValor and" +
-            " u.id = ul.usuario_id and u.id = ut.usuario_id and u.id = um.usuario_id\n" +
-            "and ul.loja_id in :lojas and ut.tamanho_id in :tamanhos and um.marca_id in :marcas", nativeQuery = true)
+            " u.id = ut.usuario_id and u.id = um.usuario_id\n" +
+            "and ut.tamanho_id in :tamanhos and um.marca_id in :marcas", nativeQuery = true)
     List<Usuario> findDistinctEmails(
             @Param("maxValor") Double maxValor,
-            @Param("lojas") HashSet<Long> lojas,
             @Param("tamanhos") HashSet<Long> tamanhos,
             @Param("marcas") HashSet<Long> marcas
     );
