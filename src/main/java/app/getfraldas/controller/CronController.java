@@ -29,7 +29,15 @@ public class CronController {
 
         promocaoService.enviaPushPromocoes();
         cronService.saveCron();
+        return "Rolou";
+    }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/cron/disparaPushesPromocaoUsuario", method = RequestMethod.GET)
+    public String cronEnvia() throws SASServiceException {
+
+        promocaoService.enviaPushPromocoesUsers();
         return "Rolou";
     }
 }

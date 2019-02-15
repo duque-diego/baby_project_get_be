@@ -1,9 +1,6 @@
 package app.getfraldas.service.impl;
 
-import app.getfraldas.DTO.Contents;
-import app.getfraldas.DTO.DadosPromocaoDTO;
-import app.getfraldas.DTO.Filter;
-import app.getfraldas.DTO.PromocaoDTO;
+import app.getfraldas.DTO.*;
 import app.getfraldas.exception.SASServiceException;
 import app.getfraldas.models.*;
 import app.getfraldas.repository.*;
@@ -39,6 +36,9 @@ public class PromocaoService implements IPromocaoService {
 
     @Autowired
     private TamanhoRepository tamanhoRepository;
+
+    @Autowired
+    private UsuarioPushAppRepository usuarioPushAppRepository;
 
     @Autowired
     private CronService cronService;
@@ -121,18 +121,55 @@ public class PromocaoService implements IPromocaoService {
                     }
 
                     filterList.add(filter);
+                    UsuarioPushAppControleDTO usuarioPushAppControleDTO = new UsuarioPushAppControleDTO();
+                    usuarioPushAppControleDTO.setFilterList(filterList);
+                    usuarioPushAppControleDTO.setPushTerminated(false);
+                    usuarioPushAppRepository.put(usuarioPushAppControleDTO);
                 }
 
-                try{
-                    //dispara Push
-                    if(filterList.size() > 0){
-                        Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
-                        OneSignalUtil.callPushNotificationService(contents, filterList);
-                    }
-                }catch (SASServiceException e){
-                    throw new  SASServiceException(e.getMessage());
-                }
+//                try{
+//                    //dispara Push
+//                    if(filterList.size() > 0){
+//                        Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
+//                        OneSignalUtil.callPushNotificationService(contents, filterList);
+//                    }
+//                }catch (SASServiceException e){
+//                    throw new  SASServiceException(e.getMessage());
+//                }
             }
+        }
+    }
+
+
+    public void enviaPushPromocoesUsers() throws SASServiceException {
+
+        List<UsuarioPushAppControleDTO> usuarioPushAppControleDTOList = usuarioPushAppRepository.
+                listByProperty("pushTerminated", false);
+
+        UsuarioPushAppControleDTO usuarioPushAppControleDTO = usuarioPushAppControleDTOList.get(0);
+        List<Filter> filterList = usuarioPushAppControleDTO.getFilterList();
+        LOGGER.info("Tamanho da lista: " + filterList.size());
+        if(filterList.size() > 50){
+            LOGGER.info("Tamanho da lista é maior que 50: " + filterList.size());
+            usuarioPushAppControleDTO.setPushTerminated(false);
+            List<Filter> filterListRestante = filterList.subList(50, filterList.size());
+            usuarioPushAppControleDTO.setFilterList(filterListRestante);
+
+            filterList = filterList.subList(0, 49);
+        }else{
+            LOGGER.info("Tamanho da lista é menor que 50: " + filterList.size());
+            usuarioPushAppControleDTO.setPushTerminated(true);
+        }
+        usuarioPushAppRepository.put(usuarioPushAppControleDTO);
+
+        try{
+            //dispara Push
+            if(filterList.size() > 0){
+                Contents contents = OneSignalUtil.montaContentOneSignal("Temos promoções de fraldas para você.");
+                OneSignalUtil.callPushNotificationService(contents, filterList);
+            }
+        }catch (SASServiceException e){
+            throw new  SASServiceException(e.getMessage());
         }
     }
 

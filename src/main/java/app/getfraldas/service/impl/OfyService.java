@@ -2,6 +2,7 @@ package app.getfraldas.service.impl;
 
 import app.getfraldas.DTO.CadastroUsuarioAppDTO;
 import app.getfraldas.DTO.PromocaoDTO;
+import app.getfraldas.DTO.UsuarioPushAppControleDTO;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class OfyService {
 
     static {
         ObjectifyService.register(CadastroUsuarioAppDTO.class);
+        ObjectifyService.register(UsuarioPushAppControleDTO.class);
 //        ObjectifyService.register(PromocaoDTO.class);
     }
 

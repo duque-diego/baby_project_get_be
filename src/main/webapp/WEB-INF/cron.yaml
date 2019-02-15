@@ -3,3 +3,8 @@ cron:
   url: /cron/disparaPushesPromocao
   target: beta
   schedule: every 59 mins
+
+- description: "daily summary job"
+  url: /cron/disparaPushesPromocaoUsuario
+  target: beta
+  schedule: every 5 hours
