@@ -50,7 +50,7 @@ public class PromocaoService implements IPromocaoService {
 
     @Override
     public Iterable<Promocao> getPromocoes() {
-        return promocaoRepository.findAll();
+        return promocaoRepository.findByAtivoTrue();
     }
 
     @Override
@@ -203,7 +203,7 @@ public class PromocaoService implements IPromocaoService {
     }
 
     public Iterable<PromocaoDTO> getPromocoesApp () {
-        Iterable<Promocao> promocoes = promocaoRepository.findAll();
+        Iterable<Promocao> promocoes = promocaoRepository.findByAtivoTrue();
         return modelToDto(promocoes);
     }
 
@@ -218,37 +218,37 @@ public class PromocaoService implements IPromocaoService {
                     usuario.getMarcas() != null && !usuario.getMarcas().isEmpty()) {
 
                 if (possuiValorMax) {
-                    return modelToDto(promocaoRepository.findByValorUnidadeLessThanEqualAndTamanhoIdInAndModeloMarcaIdInOrderByValorUnidadeAsc(
+                    return modelToDto(promocaoRepository.findByValorUnidadeLessThanEqualAndTamanhoIdInAndModeloMarcaIdInAndAtivoTrueOrderByValorUnidadeAsc(
                             usuario.getValorUnidadeMax(), getTamanhosIds(usuario.getTamanhos()), getMarcasIds(usuario.getMarcas())
                     ));
                 }
 
-                return modelToDto(promocaoRepository.findByTamanhoIdInAndModeloMarcaIdInOrderByValorUnidadeAsc(
+                return modelToDto(promocaoRepository.findByTamanhoIdInAndModeloMarcaIdInAndAtivoTrueOrderByValorUnidadeAsc(
                         getTamanhosIds(usuario.getTamanhos()), getMarcasIds(usuario.getMarcas())
                 ));
             }
 
             if (usuario.getTamanhos() != null && !usuario.getTamanhos().isEmpty()) {
                 if (possuiValorMax) {
-                    return modelToDto(promocaoRepository.findByValorUnidadeLessThanEqualAndTamanhoIdInOrderByValorUnidadeAsc(
+                    return modelToDto(promocaoRepository.findByValorUnidadeLessThanEqualAndTamanhoIdInAndAtivoTrueOrderByValorUnidadeAsc(
                             usuario.getValorUnidadeMax(), getTamanhosIds(usuario.getTamanhos())
                     ));
                 }
 
-                return modelToDto(promocaoRepository.findByTamanhoIdInOrderByValorUnidadeAsc(getTamanhosIds(usuario.getTamanhos())));
+                return modelToDto(promocaoRepository.findByTamanhoIdInAndAtivoTrueOrderByValorUnidadeAsc(getTamanhosIds(usuario.getTamanhos())));
             }
 
             if (usuario.getMarcas() != null && !usuario.getMarcas().isEmpty()) {
                 if (possuiValorMax) {
-                    return modelToDto(promocaoRepository.findByValorUnidadeLessThanEqualAndModeloMarcaIdInOrderByValorUnidadeAsc(
+                    return modelToDto(promocaoRepository.findByValorUnidadeLessThanEqualAndModeloMarcaIdInAndAtivoTrueOrderByValorUnidadeAsc(
                             usuario.getValorUnidadeMax(), getMarcasIds(usuario.getMarcas())
                     ));
                 }
 
-                return modelToDto(promocaoRepository.findByModeloMarcaIdInOrderByValorUnidadeAsc(getMarcasIds(usuario.getMarcas())));
+                return modelToDto(promocaoRepository.findByModeloMarcaIdInAndAtivoTrueOrderByValorUnidadeAsc(getMarcasIds(usuario.getMarcas())));
             }
 
-            return modelToDto(promocaoRepository.findAll());
+            return modelToDto(promocaoRepository.findByAtivoTrue());
         }
 
         return null;

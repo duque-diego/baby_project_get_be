@@ -47,6 +47,9 @@ public class Promocao {
     @Column(name = "imageLink")
     private String imageLink;
 
+    @Column(name = "ativo")
+    private boolean ativo;
+
     @ManyToOne
     private Modelo modelo;
 
@@ -150,5 +153,13 @@ public class Promocao {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

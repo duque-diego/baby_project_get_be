@@ -15,34 +15,35 @@ import java.util.List;
 public interface PromocaoRepository extends CrudRepository<Promocao, Long> {
     List<Promocao> findByLastUpdateGreaterThanEqual(@Param("minDate") Date minDate);
 
-    Iterable<Promocao> findByTamanhoIdInAndModeloMarcaIdInOrderByValorUnidadeAsc(
+    Iterable<Promocao> findByTamanhoIdInAndModeloMarcaIdInAndAtivoTrueOrderByValorUnidadeAsc(
             @Param("tamanhos") HashSet<Long> tamanhos,
             @Param("marcas") HashSet<Long> marcas
     );
 
-    Iterable<Promocao> findByValorUnidadeLessThanEqualAndTamanhoIdInAndModeloMarcaIdInOrderByValorUnidadeAsc(
+    Iterable<Promocao> findByValorUnidadeLessThanEqualAndTamanhoIdInAndModeloMarcaIdInAndAtivoTrueOrderByValorUnidadeAsc(
             @Param("maxValor") Double maxValor,
             @Param("tamanhos") HashSet<Long> tamanhos,
             @Param("marcas") HashSet<Long> marcas
     );
 
-    Iterable<Promocao> findByTamanhoIdInOrderByValorUnidadeAsc(
+    Iterable<Promocao> findByTamanhoIdInAndAtivoTrueOrderByValorUnidadeAsc(
             @Param("tamanhos") HashSet<Long> tamanhos
     );
 
-    Iterable<Promocao> findByValorUnidadeLessThanEqualAndTamanhoIdInOrderByValorUnidadeAsc(
+    Iterable<Promocao> findByValorUnidadeLessThanEqualAndTamanhoIdInAndAtivoTrueOrderByValorUnidadeAsc(
             @Param("maxValor") Double maxValor,
             @Param("tamanhos") HashSet<Long> tamanhos
     );
 
-    Iterable<Promocao> findByModeloMarcaIdInOrderByValorUnidadeAsc(
+    Iterable<Promocao> findByModeloMarcaIdInAndAtivoTrueOrderByValorUnidadeAsc(
             @Param("marcas") HashSet<Long> marcas
     );
 
-    Iterable<Promocao> findByValorUnidadeLessThanEqualAndModeloMarcaIdInOrderByValorUnidadeAsc(
+    Iterable<Promocao> findByValorUnidadeLessThanEqualAndModeloMarcaIdInAndAtivoTrueOrderByValorUnidadeAsc(
             @Param("maxValor") Double maxValor,
             @Param("marcas") HashSet<Long> marcas
     );
 
+    Iterable<Promocao> findByAtivoTrue();
 
 }
